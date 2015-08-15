@@ -1,3 +1,38 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<% include templates/header.ejs %>
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img src="images/icon.png" alt="Bank of Rory Logo" align="middle">&nbsp;Bank of Rory</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/about">About</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/login">Log in</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+    <div class="jumbotron">
+	  <p>&nbsp;</p>
+        <div id="headingWhite"><img src="images/borlogo.png" alt="Bank of Rory Logo"  align="middle">&nbsp;Bank of Rory - Error</div>
+       
+            <h2>Message: <%= message %></h2>
+            <h2>Error Type: <%= error.status %></h2>
+            <pre><%= error.stack %></pre>
+    </div>
+    </div>
+<% include templates/footer.ejs %>

@@ -10,6 +10,7 @@ The following project was set up by myself in a dib to learn Node.js and to be a
 ##Technologies In Use
 
 Node.js, Express Web Framework, JavaScript, HTML5, CSS3, Bootstrap, MySQL and Git
+
 Possible others: Grunt, Angular.js 
 
 ## Assignment Outline

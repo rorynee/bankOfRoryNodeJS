@@ -1,6 +1,5 @@
 <% include templates/header.ejs %>
-
-   <!-- Fixed navbar -->
+ <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -14,11 +13,11 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/login">Log in</a></li>
+            <li class="active"><a href="/login">Log in</a></li>
             <li><a href="/signup">Sign Up</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -30,12 +29,24 @@
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
 	  <p>&nbsp;</p>
-        <div id="headingWhite"><img src="images/borlogo.png" alt="Bank of Rory Logo"  align="middle">&nbsp; Welcome To The Bank of Rory</div>
-        <p>The Bank of Rory bank is a well-established online bank since 2014. We have lots of happy customers. They are happy to bank with us for many different reasons. Mainly because we care about or customers.</p>
-		<p>Bank with us now with Bank of Rory. You can take that to the back.</p>
+        <div id="headingWhite"><img src="images/borlogo.png" alt="Bank of Rory Logo"  align="middle">&nbsp;Bank of Rory</div>
         <p>&nbsp;</p>
-	<p>
-      <a class="btn btn-lg btn-primary" id="bag" href="./signup" role="button">Sign Up Now &raquo;</a><img src="images/bank-icon.png" alt="bank" width="138" height="138" align="right">
+        <p id="centertext">Please login to view your account information.</p>
+       
+        <form class="form-signin" method="POST" action="/login" >
+                  
+                   
+                  <input type="email" class="form-control" name="username" placeholder="Username" required autofocus>
+                  <br/>
+                  <input type="password" class="form-control" name="password" placeholder="Password" required>
+					
+                  <button class="btn btn-lg btn-primary btn-block" id="button_green" type="submit">Sign in</button>
+                  <div id="reglink">
+                    <p><a href="/signup" style="color:white;">Register Now</a></p>
+                  </div>
+         </form>
+<p>
+      <img src="images/bank-icon.png" alt="bank" width="138" height="138" align="right">
       </p>
       </div>
         
@@ -43,6 +54,4 @@
 	  
 	 
 
-   
 <% include templates/footer.ejs %>
-
