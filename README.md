@@ -5,7 +5,7 @@
 
 ##About
 
-The following project was set up by myself in a dib to learn Node.js and to be able to practice my JavaScript. This project is very close to the PHP version as outlined in a previous project.
+The following project was set up by myself in a bib to learn Node.js and to be able to practice my JavaScript. This project is very close to the PHP version as outlined in a previous project.
 
 ##Technologies In Use
 

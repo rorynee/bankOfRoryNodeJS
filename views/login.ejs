@@ -35,11 +35,22 @@
        
         <form class="form-signin" method="POST" action="/login" >
                   
-                   
+                   <% if(typeof success !== 'undefined'){ %>
+                            <div class="alert alert-success" role="alert">
+                                    <p class="alert-link error_message"><%= success %> </p>
+                            </div>
+                    <%  }  %>
                   <input type="email" class="form-control" name="username" placeholder="Username" required autofocus>
                   <br/>
                   <input type="password" class="form-control" name="password" placeholder="Password" required>
-					
+			
+                  <% if(typeof message !== 'undefined'){ %>
+                            <div class="alert alert-danger" role="alert">
+                                    <p class="alert-link error_message">Error: <%= message %> </p>
+                            </div>
+                    <%  }  %>
+
+
                   <button class="btn btn-lg btn-primary btn-block" id="button_green" type="submit">Sign in</button>
                   <div id="reglink">
                     <p><a href="/signup" style="color:white;">Register Now</a></p>

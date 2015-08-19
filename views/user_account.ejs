@@ -1,0 +1,130 @@
+<% if(sess.role){
+	
+	if(sess.role != 1){
+	
+		if(sess.user_id != user.account_no ){
+%>
+                        <% include error_dash.ejs %>
+
+
+<%
+		}else{
+%>
+
+
+
+<% include templates/header_dash.ejs %>
+<body>
+	 <% if(sess.role == 1){ %>
+                <header id="header">
+			<hgroup>
+				<h1 class="site_title">Bank of Rory - <a href="dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
+				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="dashboard/user_details/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
+				</h2><div class="btn_view_site"><a href="/logout">Log Out</a></div>
+			</hgroup>
+		</header> <!-- end of header bar -->
+		
+		<section id="secondary_bar">
+			<div class="user">
+			</div>
+			<div class="breadcrumbs_container">
+				<article class="breadcrumbs"><a class="current" href="dashboard/admin/<%= sess.user_id %>">Dashboard</a> </article>
+			</div>
+		</section><!-- end of secondary bar -->
+		
+
+	 <% } else { %>
+                <header id="header">
+			<hgroup>
+				<h1 class="site_title">Bank of Rory - <a href="dashboard/user/<%= user.account_no %>">Dashboard</a></h1>
+				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="/dashboard/user_details/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
+				</h2><div class="btn_view_site"><a href="/logout">Log Out</a></div>
+			</hgroup>
+		</header> <!-- end of header bar -->
+		
+		<section id="secondary_bar">
+			<div class="user">
+			</div>
+			<div class="breadcrumbs_container">
+				<article class="breadcrumbs"><a class="current" href="dashboard/user/<%= user.account_no %>">Dashboard</a> </article>
+			</div>
+		</section><!-- end of secondary bar -->	 
+	 
+	 <% } %>
+	
+
+        <% include templates/side_bar.ejs %>
+
+	<section id="main" class="column">
+	 
+	  <div class="clear"></div><!-- end of post new article -->
+
+	  <% if(sess.role == 1 ){ %>
+	    
+	   
+	  <% } else { %>
+	  <article class="module width_full">
+		 <header><h3>Account Overview</h3></header>
+			<div class="module_content">
+				<h1>Account Overview</h1>
+
+                                    <% if(user){ %>
+                                    <table class="view_table">
+                                    <tr>
+                                    <td><p><strong>Account Number:</strong></p></td><td><%= user.id %></td>
+                                    </tr>
+                                    <tr>
+                                    <td><p><strong>First Name:</strong></p></td><td><%= user.first_name %></td>
+                                    </tr>
+                                    <tr>
+                                    <td><p><strong>Last Name:</strong></p></td><td><%= user.last_name %></td>
+                                    </tr>
+                                    <tr>
+                                    <td><p><strong>Username/Email:</strong></p></td><td><%= user.email %></td>
+                                    </tr>
+                                    <tr>
+                                    <td><p><strong>Age:</strong></p></td><td><%= user.age %></td>
+                                    </tr>
+                                    <tr>
+                                    <td><p><strong>Address:</strong></p></td><td><%= user.street %> ,<%= user.city %> ,<%= user.country %></td>
+                                    </tr>
+                                    <tr>
+                                    <td><p><strong>Balance:</strong></p></td><td>&euro; <%= user.balance %></td>
+                                    </tr>
+                                    <tr>
+                                    <td><p><strong>Account Type:</strong></p></td><td>
+                                    <% if(user.account_type_id == 1){%>
+                                                    Current Account
+                                            <%}else{%>
+                                                    Student Account
+                                    <% } %>
+                                    </td>
+                                    </tr>
+                                    </table>
+                                    <% } %>
+						
+				<div class="spacer"></div>
+						
+				<h3>Quick Links <a href="dashboard/user_deposit/<%= user.account_no %>">Deposit Money</a>&nbsp;&nbsp;
+				<a href="dashboard/user_withdrawal/<%= user.account_no %>">Withdraw Money</a>&nbsp;&nbsp;
+				<a href="dashboard/user_history/<%= user.account_no %>">Account History</a> </h3>
+						
+						
+			</div>
+	  </article><!-- end of styles article -->
+			 
+	  <% } %>
+		<div class="spacer"></div>
+
+	</section>           
+        
+<% include templates/footer_dash.ejs %>
+
+
+<%
+                }
+
+	}	
+
+ }
+ %> 
