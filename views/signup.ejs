@@ -33,7 +33,11 @@
         <p>Please fill out the form below to regiater as a new account.</p> 
         <p>Thanking for Banking at the Bank Of Rory</p> 
         <div>
-			
+            <% if(typeof message !== 'undefined'){ %>
+                        <div class="alert alert-danger" role="alert">
+                                <p class="alert-link error_message">Error: <%= message %> </p>
+                        </div>
+                <%  }  %>		
             <form class="form-signin" role="form" method="POST" action="/signup">
               <div class="form-group form-group-lg">
                 <label for="inputEmail3" class="col-sm-2 control-label">Username/Email</label>

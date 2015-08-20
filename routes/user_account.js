@@ -15,39 +15,48 @@ var pool = mysql.createPool({
 /* GET user_account page. */
 router.get('/:id', function(req, res, next) {
     
-    var userdetails;
-    pool.getConnection(function(err, connection) {
-                
-                if(!err) {
-                        console.log("Database is connected ... \n\n"+req.params.name+' id '+req.params.id+' path '+req.path);  
-                } else {
-                        console.log("Error connecting database ... \n\n");  
-                }
-                
-                // CALL GET_ACCOUNT_INFO(req.params)
-                var query = connection.query('CALL GET_ACCOUNT_INFO(?)',
-                                [req.params.id], function(err, rows) {
-              
-                if(err)	{
-                        throw err;
-                }
-                console.log("rows.length:"+rows.length);
-                
-                console.log( query.sql );
-                
-                console.log( rows );
-
-                userdetails = rows[0][0];
-
-                console.log( userdetails );
-                 
-                res.render('user_account', { title: 'Dashboard - User Account', sess: req.session, user: userdetails });  
-
-              
-                connection.release();
-            });
+    console.log( req.session.user_id );
+    console.log( req.params.id );
     
-    });
+    if(new String(req.session.user_id).valueOf() === new String(req.params.id).valueOf()){
+    
+        var userdetails;
+        pool.getConnection(function(err, connection) {
+
+                    if(!err) {
+                            console.log("Database is connected ... \n\n");  
+                    } else {
+                            console.log("Error connecting database ... \n\n");  
+                    }
+
+                    // CALL GET_ACCOUNT_INFO(req.params)
+                    var query = connection.query('CALL GET_ACCOUNT_INFO(?)',
+                                    [req.params.id], function(err, rows) {
+
+                    if(err)	{
+                            throw err;
+                    }
+                    console.log("rows.length:"+rows.length);
+
+                    console.log( query.sql );
+
+                    console.log( rows );
+
+                    userdetails = rows[0][0];
+
+                    console.log( userdetails );
+
+                    res.render('user_account', { title: 'Dashboard - User Account', sess: req.session, user: userdetails });  
+
+
+                    connection.release();
+                });
+
+        });
+        
+    }else{
+        res.redirect('/logout');
+    }
     
 });    
 

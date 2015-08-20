@@ -4,12 +4,11 @@
 ##Work in Progress
 
 ##About
-
-The following project was set up by myself in a bib to learn Node.js and to be able to practice my JavaScript. This project is very close to the PHP version as outlined in a previous project.
+Having never covered Node.js in college. The following project was set up by myself in a bid to start learning Node.js and to be able to practice my JavaScript. This project is very close to the PHP version as outlined in a previous project.
 
 ##Technologies In Use
 
-Node.js, Express Web Framework, JavaScript, HTML5, CSS3, Bootstrap, MySQL and Git
+Node.js, Express Web Framework, Sessions, MD5, JavaScript, HTML5, CSS3, Bootstrap, MySQL and Git
 
 Possible others: Grunt, Angular.js 
 

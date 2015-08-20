@@ -90,7 +90,7 @@ router.post('/', function(req, res, next) {
                         res.redirect('/dashboard/user/'+sess.user_id);
                     
                 }else{
-                    
+                    req.session.destroy();
                     res.render('login', { title: 'Log In', message:'Password or Username is Invalid' });
                 
                 }
@@ -101,11 +101,6 @@ router.post('/', function(req, res, next) {
                 
             });
             
-            
-            
-             
-            
-            //res.render('login', { title: 'Log In', message:'query: '+query.sql });
             
        }else{
           
