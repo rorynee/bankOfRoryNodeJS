@@ -2,7 +2,7 @@
 // Alert function for the ticket systemLanguage
 // Used to view messages and to view replys
 function fullMessage(data) {
-	alert(data);
+	alert(data);  
 }
 		
 // Document ready function
