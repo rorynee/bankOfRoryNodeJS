@@ -20,7 +20,7 @@
 			<hgroup>
 				<h1 class="site_title">Bank of Rory - <a href="dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
 				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="dashboard/user_details/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
-				</h2><div class="btn_view_site"><a href="/logout">Log Out</a></div>
+				div class="btn_view_site"><a href="/logout">Log Out</a></div>
 			</hgroup>
 		</header> <!-- end of header bar -->
 		
@@ -37,8 +37,8 @@
                 <header id="header">
 			<hgroup>
 				<h1 class="site_title">Bank of Rory - <a href="dashboard/user/<%= user.account_no %>">Dashboard</a></h1>
-				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="/dashboard/user_details/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
-				</h2><div class="btn_view_site"><a href="/logout">Log Out</a></div>
+				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="/dashboard/user/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
+				<div class="btn_view_site"><a href="/logout">Log Out</a></div>
 			</hgroup>
 		</header> <!-- end of header bar -->
 		
@@ -46,7 +46,7 @@
 			<div class="user">
 			</div>
 			<div class="breadcrumbs_container">
-				<article class="breadcrumbs"><a class="current" href="dashboard/user/<%= user.account_no %>">Dashboard</a> </article>
+				<article class="breadcrumbs"><a class="current" href="../../dashboard/user/<%= user.account_no %>">Dashboard</a> </article>
 			</div>
 		</section><!-- end of secondary bar -->	 
 	 
@@ -89,7 +89,7 @@
                                     <td><p><strong>Address:</strong></p></td><td><%= user.street %> ,<%= user.city %> ,<%= user.country %></td>
                                     </tr>
                                     <tr>
-                                    <td><p><strong>Balance:</strong></p></td><td>&euro; <%= user.balance %></td>
+                                    <td><p><strong>Balance:</strong></p></td><td>&euro; <%= user.balance.toFixed(2) %></td>
                                     </tr>
                                     <tr>
                                     <td><p><strong>Account Type:</strong></p></td><td>
@@ -105,9 +105,9 @@
 						
 				<div class="spacer"></div>
 						
-				<h3>Quick Links <a href="dashboard/user_deposit/<%= user.account_no %>">Deposit Money</a>&nbsp;&nbsp;
-				<a href="dashboard/user_withdrawal/<%= user.account_no %>">Withdraw Money</a>&nbsp;&nbsp;
-				<a href="dashboard/user_history/<%= user.account_no %>">Account History</a> </h3>
+				<h3>Quick Links <a href="../../dashboard/deposit/<%= user.account_no %>">Deposit Money</a>&nbsp;&nbsp;
+				<a href="../../dashboard/withdrawal/<%= user.account_no %>">Withdraw Money</a>&nbsp;&nbsp;
+				<a href="../../dashboard/history/<%= user.account_no %>">Account History</a> </h3>
 						
 						
 			</div>

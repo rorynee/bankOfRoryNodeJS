@@ -44,8 +44,8 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DEPOSIT_MONEY`(acc_id NUMERIC, amount decimal(13,2))
 BEGIN
-UPDATE `account` SET balance = balance + amount WHERE id = acc_id;
-INSERT INTO transactions (transactions_time, transaction_type, transaction_amount, account_id)
+UPDATE `account` SET balance = balance + amount WHERE users_account_no = acc_id;
+INSERT INTO transactions (transactions_time, transaction_type, transaction_amount, users_account_no)
 VALUES (CURRENT_TIMESTAMP,'Deposit Money', amount,acc_id);
 END$$
 
@@ -162,8 +162,8 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `WITHDRAW_MONEY`(acc_id NUMERIC, amount decimal(13,2))
 BEGIN
-UPDATE `account` SET balance = balance - amount WHERE id = acc_id;
-INSERT INTO transactions (transactions_time, transaction_type, transaction_amount, account_id)
+UPDATE `account` SET balance = balance - amount WHERE users_account_no = acc_id;
+INSERT INTO transactions (transactions_time, transaction_type, transaction_amount, users_account_no)
 VALUES (CURRENT_TIMESTAMP,'Withdraw Money', amount,acc_id);
 END$$
 
@@ -249,10 +249,10 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `transactions_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `transaction_type` varchar(255) NOT NULL,
   `transaction_amount` decimal(13,2) NOT NULL DEFAULT '0.00',
-  `account_id` int(11) NOT NULL,
+  `users_account_no` int(11) NOT NULL,
   PRIMARY KEY (`transaction_id`),
   UNIQUE KEY `tranactions_UNIQUE` (`transaction_id`),
-  KEY `fk_transactions_account1_idx` (`account_id`)
+  KEY `fk_transactions_users_account1_nox` (`users_account_no`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=99 ;
 
 --

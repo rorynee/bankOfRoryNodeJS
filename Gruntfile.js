@@ -19,7 +19,6 @@ module.exports = function (grunt) {
                                                     'public/stylesheets/mystyles.css'],
                 
                 'public/stylesheets/dashboard.min.css': ['public/stylesheets/layout.css',
-                                                         'public/stylesheets/ie.css',
                                                          'public/stylesheets/bootstrap.min.css',
                                                          'public/stylesheets/bootstrap-theme.min.css',
                                                          'public/stylesheets/jquery.dataTables.css',

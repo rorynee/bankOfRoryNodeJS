@@ -1,0 +1,135 @@
+<% if(sess.role){
+	
+	if(sess.role != 1){
+	
+		if(sess.user_id != user.account_no ){
+%>
+                        <% include error_dash.ejs %>
+
+
+<%
+		}else{
+%>
+
+
+
+<% include templates/header_dash.ejs %>
+<body>
+	 <% if(sess.role == 1){ %>
+                <header id="header">
+			<hgroup>
+				<h1 class="site_title">Bank of Rory - <a href="dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
+				<h2 class="section_title">&nbsp;</h2>
+                                <div class="btn_view_site"><a href="dashboard/user/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
+				<div class="btn_view_site"><a href="/logout">Log Out</a></div>
+			</hgroup>
+		</header> <!-- end of header bar -->
+		
+		<section id="secondary_bar">
+			<div class="user">
+			</div>
+			<div class="breadcrumbs_container">
+				<article class="breadcrumbs"><a href="dashboard/admin/<%= sess.user_id %>">Dashboard</a>
+                                <div class="breadcrumb_divider"></div> <a href="../../dashboard/history/<%= user.account_no %>" class="current">Account History</a>  </article>
+			</div>
+		</section><!-- end of secondary bar -->
+		
+
+	 <% } else { %>
+                <header id="header">
+			<hgroup>
+				<h1 class="site_title">Bank of Rory - <a href="dashboard/user/<%= user.account_no %>">Dashboard</a></h1>
+				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="/dashboard/user/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div></h2>
+                                <div class="btn_view_site"><a href="/logout">Log Out</a></div>
+			</hgroup>
+		</header> <!-- end of header bar -->
+		
+		<section id="secondary_bar">
+			<div class="user">
+			</div>
+			<div class="breadcrumbs_container">
+				<article class="breadcrumbs"><a href="../../dashboard/user/<%= user.account_no %>">Dashboard</a>
+                                <div class="breadcrumb_divider"></div> <a href="../../dashboard/history/<%= user.account_no %>" class="current">Account History</a></article>
+			</div>
+		</section><!-- end of secondary bar -->	 
+	 
+	 <% } %>
+	
+
+        <% include templates/side_bar.ejs %>
+
+	<section id="main" class="column">
+	 
+	  <div class="clear"></div><!-- end of post new article -->
+
+	  <% if(sess.role == 1 ){ %>
+	    
+	   
+	  <% } else { %>
+	  <article class="module width_full">
+		 <header><h3>Withdraw Money</h3></header>
+                        <div class="module_content">
+                                <h1>Account History</h1>
+                                <p>Below is a list of all your transactions</p>
+                                <p><strong>Account Number:</strong> <%= user.id %></p>
+                                <p><strong>Name:</strong> <%= user.first_name %> <?php echo($user['last_name']);?></p>
+                                <p><strong>Balance:</strong> &euro;  <%= user.balance.toFixed(2) %></p>
+                                <p><strong>Account Type:</strong> 
+                                <% if(user.account_type_id == 1){%>
+                                                    Current Account
+                                            <%}else{%>
+                                                    Student Account
+                                <% } %></p>
+
+                                <table id="data_table" class="display">
+                                        <thead>
+                                                <tr>
+                                                        <th>Transaction ID</th>
+                                                        <th>Date & Time</th>
+                                                        <th>Type</th>
+                                                        <th>Amount</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                                <% trans.forEach(function(tran){ %>
+                                                        <tr>
+                                                                <td><%= tran.transaction_id %></td>
+                                                                <td><%= tran.transactions_time %></td>
+                                                                <td><%= tran.transaction_type %></td>
+                                                                <td>&euro; <%= tran.transaction_amount.toFixed(2) %></td>
+                                                        </tr>
+                                                <% }); %>	
+                                        </tbody>
+                                </table>
+
+
+
+                        </div>
+                        <p>&nbsp;</p>		
+				<h3>Quick Links <a href="../../dashboard/deposit/<%= user.account_no %>">Deposit Money</a>&nbsp;&nbsp;
+				<a href="../../dashboard/withdrawal/<%= user.account_no %>">Withdraw Money</a>&nbsp;&nbsp;
+				<a href="../../dashboard/history/<%= user.account_no %>">Account History</a> </h3>
+						
+						
+			<!-- </div> -->
+	  </article><!-- end of styles article -->
+			 
+	  <% } %>
+		<div class="spacer"></div>
+
+	</section>           
+        
+<% include templates/footer_dash.ejs %>
+
+
+<%
+                }
+
+	}	
+
+ }else{ %>
+
+    
+     <% include error_dash.ejs %>
+
+<% } %>
