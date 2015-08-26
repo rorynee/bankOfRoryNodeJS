@@ -53,8 +53,6 @@ router.post('/', function(req, res, next) {
 
                                             if(street.length > 0 && city.length > 0 && country.length > 0){
 
-
-                                                    console.log("Boom, all Good");
                                                     var hashpass = md5(pass);
                                                     var affectedRows = 0;
                                             pool.getConnection(function(err, connection) {

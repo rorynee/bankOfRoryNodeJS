@@ -17,6 +17,7 @@ var user_account = require('./routes/user_account');
 var deposit = require('./routes/deposit');
 var withdraw = require('./routes/withdraw');
 var history = require('./routes/history');
+var details = require('./routes/details');
 
 var app = express();
 
@@ -54,6 +55,9 @@ app.use('/dashboard/user/',user_account);
 app.use('/dashboard/deposit/',deposit);
 app.use('/dashboard/withdrawal/',withdraw);
 app.use('/dashboard/history/',history);
+app.use('/dashboard/',details);
+
+
 
 
 // catch 404 and forward to error handler

@@ -8,9 +8,9 @@ Having never covered Node.js in college. The following project was set up by mys
 
 ##Technologies In Use
 
-Node.js, Express Web Framework, Sessions, MD5, JavaScript, HTML5, CSS3, Bootstrap, MySQL and Git
+Node.js, Express Web Framework, Sessions and MySQL throught Node.js, MD5, JavaScript, HTML5, CSS3, Bootstrap and Git
 
-Possible others: Grunt, Angular.js 
+Possible others: Grunt, Bower, Angular.js 
 
 ## Assignment Outline
 

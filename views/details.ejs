@@ -1,0 +1,357 @@
+<% if(sess.role){
+	
+	if(sess.role != 1){
+	
+		if(sess.user_id != user.account_no ){
+%>
+                        <% include error_dash.ejs %>
+
+
+<%
+		}else{
+%>
+
+
+
+<% include templates/header_dash.ejs %>
+<body>
+	 <% if(sess.role == 1){ %>
+                <header id="header">
+			<hgroup>
+				<h1 class="site_title">Bank of Rory - <a href="dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
+				<h2 class="section_title">&nbsp;</h2>
+                                <div class="btn_view_site"><a href="dashboard/user/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
+				<div class="btn_view_site"><a href="/logout">Log Out</a></div>
+			</hgroup>
+		</header> <!-- end of header bar -->
+		
+		<section id="secondary_bar">
+			<div class="user">
+			</div>
+			<div class="breadcrumbs_container">
+				<article class="breadcrumbs"><a href="dashboard/admin/<%= sess.user_id %>">Dashboard</a>
+                                <div class="breadcrumb_divider"></div> <a href="../../dashboard/details/<%= user.account_no %>" class="current">Update Account</a>  </article>
+			</div>
+		</section><!-- end of secondary bar -->
+		
+
+	 <% } else { %>
+                <header id="header">
+			<hgroup>
+				<h1 class="site_title">Bank of Rory - <a href="dashboard/user/<%= user.account_no %>">Dashboard</a></h1>
+				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="/dashboard/user/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div></h2>
+                                <div class="btn_view_site"><a href="/logout">Log Out</a></div>
+			</hgroup>
+		</header> <!-- end of header bar -->
+		
+		<section id="secondary_bar">
+			<div class="user">
+			</div>
+			<div class="breadcrumbs_container">
+				<article class="breadcrumbs"><a href="../../dashboard/user/<%= user.account_no %>">Dashboard</a>
+                                <div class="breadcrumb_divider"></div> <a href="../../dashboard/details/<%= user.account_no %>" class="current">Update Account</a></article>
+			</div>
+		</section><!-- end of secondary bar -->	 
+	 
+	 <% } %>
+	
+
+        <% include templates/side_bar.ejs %>
+	<section id="main" class="column">
+	  <div class="clear"></div><!-- end of post new article -->
+
+	  <% if(sess.role == 1 ){ %>
+
+	    <div class="clear"></div><!-- end of post new article --> 
+            <article class="module width_full">
+                      <header><h3>Update Account Type</h3></header>
+                                    <div class="module_content">
+                                            <h1>Update Account Type</h1>
+
+                                            <p>Please choose the account type. <em>Current account type is selected</em></p>
+
+                                            <form class="form-horizontal" role="form"  method="POST" action="../../dashboard/account_type/<%= user.account_no %>">
+                                                            <input type="hidden" name="_method" value="PUT"/>
+                                                       <table class="view_table">
+
+                                                       <tr>
+                                                      <div class="form-group">
+                                                            <th><label for="input_account" class="col-sm-2 control-label">Account Type</label></th>
+                                                            <td><select name="input_account">
+
+                                                            <% account_types.forEach(function(type){ %>
+
+                                                                    <% if(user.account_type_id == type.id ){ %>
+                                                                            <option value="<%= type.id %>" selected><%= type.type %></option>
+                                                                      <% }else{ %>
+                                                                            <option value="<%= type.id %>"><%= type.type %></option>
+                                                            <% } }); %>	  
+                                                            </select></td>
+
+                                                      </div>
+                                                      </tr>
+
+                                                       <tr>
+                                                            <td>
+                                                      <div class="form-group">
+                                                            <div class="col-sm-offset-2 col-sm-10">
+                                                              <button type="submit" class="btn btn-lg btn-primary btn-block">Update Account Type</button>
+                                                            </div>
+                                                      </div>
+                                                      </td>
+                                                    <td></td>
+                                                       </tr>
+                                                      </table>
+                                            </form>
+
+
+                                    </div>
+                                    <p>&nbsp;</p>
+
+              </article><!-- end of styles article -->
+              <div class="clear"></div><!-- end of post new article --> 
+            <article class="module width_full">
+                      <header><h3>Update Balance</h3></header>
+                                    <div class="module_content">
+                                            <h1>Update Balance</h1>
+
+                                            <p>Please enter a new balance for this user. <em>Changes should only be done due to Error</em></p>
+                                            <p>Balance changes are noted in the account transaction history</p>
+                                            <p>&nbsp;</p>
+                                            <h3>Current Balance: &nbsp;&euro; <%= user.balance.toFixed(2) %></h3>
+
+                                            <% if(typeof message_bal !== 'undefined'){ %>
+                                                    <div class="alert alert-danger" role="alert">
+                                                            <p class="alert-link error_message">Error: <%= message_bal %> </p>
+                                                    </div>
+                                            <%  }  %>
+
+                                            <form class="form-horizontal" role="form"  method="POST" action="../../dashboard/update_balance/<%= user.account_no %>">
+                                                        <input type="hidden" name="_method" value="PUT"/>
+                                                            <input type="hidden" name="account_num" value="<%= user.id %>"/>
+                                                       <table class="view_table">
+
+                                                       <tr>
+                                                      <div class="form-group">
+                                                            <th><label for="balance" class="col-sm-2 control-label">Change Balance To </label></th>
+                                                            <td>&euro; &nbsp;<input type="text" class="form-control" name="balance" placeholder="New Balance" required></td>
+
+                                                      </div>
+                                                      </tr>
+
+                                                       <tr>
+                                                            <td>
+                                                      <div class="form-group">
+                                                            <div class="col-sm-offset-2 col-sm-10">
+                                                              <button type="submit" class="btn btn-lg btn-primary btn-block">Update Balance</button>
+                                                            </div>
+                                                      </div>
+                                                      </td>
+                                                    <td></td>
+                                                       </tr>
+                                                      </table>
+                                            </form>
+
+
+                                    </div>
+                                    <p>&nbsp;</p>
+
+              </article><!-- end of styles article -->
+	   
+	  <% } else { %>
+
+	  <article class="module width_full">
+		<header><h3>Update Account</h3></header>
+                <div class="module_content">
+                        <h1>Update Account</h1>
+                            
+                           <p>Please fill out the form below to change your personal details.</p>
+                            <% if(typeof message_up !== 'undefined'){ %>
+                                <div class="alert alert-danger" role="alert">
+                                    <p class="alert-link error_message">Error: <%= message_up %> </p>
+                                </div>
+                            <%  }  %> 
+                        <form class="form-signin" role="form"  method="POST" action="../../dashboard/update/<%= user.account_no %>">
+                                        <input type="hidden" name="_method" value="PUT"/>
+                                   <table class="view_table">
+                                   <tr>
+                                  <div class="form-group">
+                                        <th><label for="inputEmail3" class="col-sm-2 control-label">Username/Email</label></th>
+                                        <td><p><%= user.email %></p></td>
+                                  </div>
+                                  </tr>
+                                  <tr>
+                                  <div class="form-group">
+                                        <th><label for="input_fname" class="col-sm-4 control-label">First Name</label></th>
+                                        <td><input type="text" class="form-control" name="input_fname" value="<%= user.first_name %>" required></td>
+
+
+                                  </div>
+                                  </tr>
+                                   <tr>
+                                  <div class="form-group">
+                                        <th><label for="input_lname" class="col-sm-4 control-label">Last Name</label></th>
+                                        <td><input type="text" class="form-control" name="input_lname" value="<%= user.last_name %>" required></td>
+
+
+                                  </div>
+                                   </tr>
+                                   <tr>
+                                  <div class="form-group">
+                                        <th><label for="input_age" class="col-sm-2 control-label">Age</label></th>
+                                        <td><input type="text" class="form-control" name="input_age" value="<%= user.age %>" required></td>
+                                        </div>
+                                         </tr>
+                                   <tr>
+
+                                  <div class="form-group">
+                                        <th><label for="input_street" class="col-sm-2 control-label">Street</label></th>
+                                        <td><input type="text" class="form-control" name="input_street" value="<%= user.street %>" required></td>
+
+                                  </div>
+                                   </tr>
+                                   <tr>
+
+                                  <div class="form-group">
+                                        <th><label for="input_city" class="col-sm-2 control-label">City</label></th>
+                                        <td><input type="text" class="form-control" name="input_city" value="<%= user.city %>" required></td>
+
+
+
+                                  </div>
+                                   </tr>
+                                   <tr>
+                                  <div class="form-group">
+                                        <th><label for="input_country" class="col-sm-2 control-label">Country</label></th>
+                                        <td><input type="text" class="form-control" name="input_country" value="<%= user.country %>" required></td>
+
+                                  </div>
+                                  </tr>
+                                   <tr>
+                                        <td>
+                                        <p>&nbsp;</p>
+                                  <div class="form-group">
+                                        <div>
+                                          <button type="submit" class="btn btn-lg btn-primary btn-block">Update Account</button>
+                                        </div>
+                                  </div>
+                                  </td>
+                                <td><p>&nbsp;</p></td>
+                                   </tr>
+                                  </table>
+                        </form>
+                            
+                            
+
+                  </div>
+                
+               <div class="spacer"></div>
+                <!-- </div> -->
+	  </article><!-- end of styles article -->
+          <div class="spacer"></div>
+            <article class="module width_full">
+		<header><h3>Delete Account</h3></header>
+                <div class="module_content">
+                    <h2>Delete Account</h2>
+                            
+                        <p>Please click the delete button to delete your account.</p>
+                        <p><em>This will also delete your transaction history.</em></p>
+                        <% if(typeof myerror !== 'undefined'){ %>
+                                <div class="alert alert-danger" role="alert">
+                                    <p class="alert-link error_message">Error: <%= myerror %> </p>
+                                </div>
+                        <%  }  %>
+                        <form class="form-signin" role="form" action="../../dashboard/update/<%= user.account_no %>" method="POST">
+                          
+                           <div class="form-group form-group-lg">
+                                <div class="col-sm-3 col-sm-10">
+                                  <input type="hidden" name="_method" value="DELETE"/>
+                                  <input type="hidden" name="account_no" value="<%= user.id %>"/>
+                                  <button type="submit" onclick="return confirm('Deleting your account will delete all transactions and account information. Are you sure you would like to delete your account?');" class="btn btn-lg btn-primary btn-block">Delete Account</button>
+                                </div>
+                                
+                          </div>
+                          
+                        </form>
+                        <div class="clear"></div>
+                        <div class="clear"></div>
+                        <p>&nbsp;</p>
+                </div>
+               </article><!-- end of styles article -->
+
+
+
+          <div class="spacer"></div>
+	    <article class="module width_full">
+                <header><h3>Update Account Password</h3></header>
+                    <div class="module_content">
+                            <h1>Update Account Password</h1>
+
+                            <p>Please enter a new passowrd.</p>
+                            <% if(typeof message_pas !== 'undefined'){ %>
+                                <div class="alert alert-danger" role="alert">
+                                    <p class="alert-link error_message">Error: <%= message_pas %> </p>
+                                </div>
+                            <%  }  %>
+                    <form class="form-signin" role="form"  method="POST" action="../../dashboard/account_pass/<%= user.account_no %>">
+                            <input type="hidden" name="_method" value="PUT"/>
+                               
+                                <table class="view_table">
+
+                                            <tr>
+                                      <div class="form-group">
+                                            <th><label for="input_pass" class="col-sm-2 control-label">Password</label></th>
+                                            <td><input type="password" class="form-control" name="input_pass" placeholder="New Password" required></td>
+
+                                      </div>
+                                      </tr>
+                                      <tr>
+                                      <div class="form-group">
+                                            <th><label for="input_cpass" class="col-sm-2 control-label">Confirm New Password</label></th>
+                                            <td><input type="password" class="form-control" name="input_cpass" placeholder="Confirm New Password" required></td>
+                                             <input type="hidden" name="inputEmail3" value="<%= user.email %>">
+                                      </div>
+                                       </tr>
+
+                               <tr>
+                                    <td>
+                                    <p>&nbsp;</p>
+                              <div class="form-group">
+                                    <div>
+                                      <button type="submit" class="btn btn-lg btn-primary btn-block">Update Password</button>
+                                    </div>
+                              </div>
+
+                              </td>
+                            <td><p>&nbsp;</p></td>
+                               </tr>
+                              </table>
+                    </form>
+
+
+                    </div>
+                    <p>&nbsp;</p>
+					
+	    </article><!-- end of styles article -->
+	  
+	  <div class="clear"></div><!-- end of post new article -->
+ 
+	  <% } %>
+		<div class="spacer"></div>
+
+	</section>           
+        
+<% include templates/footer_dash.ejs %>
+
+
+<%
+                }
+
+	}	
+
+ }else{ %>
+
+    
+     <% include error_dash.ejs %>
+
+<% } %>

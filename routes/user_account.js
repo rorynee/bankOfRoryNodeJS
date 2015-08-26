@@ -37,14 +37,7 @@ router.get('/:id', function(req, res, next) {
                             throw err;
                     }
                     console.log("rows.length:"+rows.length);
-
-                    console.log( query.sql );
-
-                    console.log( rows );
-
                     userdetails = rows[0][0];
-
-                    console.log( userdetails );
 
                     res.render('user_account', { title: 'Dashboard - User Account', sess: req.session, user: userdetails });  
 

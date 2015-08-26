@@ -14,15 +14,15 @@ module.exports = function (grunt) {
             },
             target: {
               files: {
-                'public/stylesheets/main.min.css': ['public/stylesheets/bootstrap.min.css',
-                                                    'public/stylesheets/bootstrap-theme.min.css',
-                                                    'public/stylesheets/mystyles.css'],
+                'public/stylesheets/main.min.css': ['assets/css/bootstrap.min.css',
+                                                    'bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
+                                                    'assets/css/mystyles.css'],
                 
-                'public/stylesheets/dashboard.min.css': ['public/stylesheets/layout.css',
-                                                         'public/stylesheets/bootstrap.min.css',
-                                                         'public/stylesheets/bootstrap-theme.min.css',
-                                                         'public/stylesheets/jquery.dataTables.css',
-                                                         'public/stylesheets/mystyles.css']
+                'public/stylesheets/dashboard.min.css': ['assets/css/layout.css',
+                                                         'bower_components/bootstrap/dist/css/bootstrap.min.css',
+                                                         'bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
+                                                         'assets/css/jquery.dataTables.css',
+                                                         'assets/css/mystyles.css']
               }
             }
         },
@@ -30,16 +30,20 @@ module.exports = function (grunt) {
         uglify: {
             my_target: {
               files: {
-                'public/javascripts/main.min.js': ['public/javascripts/jquery-1.11.1.js',
-                                            'public/javascripts/bootstrap.min.js',
-                                            'public/javascripts/ie10-viewport-bug-workaround.js'],
+                'public/javascripts/main.min.js': ['bower_components/jquery/dist/jquery.js',
+                                            'bower_components/bootstrap/dist/js/bootstrap.min.js',
+                                            'bower_components/bootstrap3-ie10-viewport-bug-workaround/ie10-viewport-bug-workaround.js'],
                                         
-                'public/javascripts/dashboard.min.js': ['public/javascripts/jquery-1.11.1.js',
-                                            'public/javascripts/hideshow.js',
-                                            'public/javascripts/jquery.tablesorter.min.js',
-                                            'public/javascripts/jquery.equalHeight.js',
-                                            'public/javascripts/jquery.dataTables.js',
-                                            'public/javascripts/mystyles.js']                         
+                'public/javascripts/dashboard.min.js': ['bower_components/jquery/dist/jquery.js',
+                                            'assets/js/hideshow.js',
+                                            'bower_components/angular/angular.min.js',
+					    'bower_components/angular-route/angular-route.min.js',
+					    'assets/js/jquery.tablesorter.min.js',
+                                            'assets/js/jquery.equalHeight.js',
+                                            'assets/js/jquery.dataTables.js',
+                                            'assets/js/mystyles.js'],
+                                        
+                'public/javascripts/myangular.js': ['assets/js/myangular.js']                        
               }
             }
         },
@@ -51,6 +55,10 @@ module.exports = function (grunt) {
             js: {
               files: ['public/javascripts/mystyles.js'],
               tasks: ['uglify']
+            },
+            angular: {
+                files: ['assets/js/myangular.js'],
+                tasks: ['uglify']
             }
         }
     });
@@ -65,7 +73,8 @@ module.exports = function (grunt) {
   // Fire the task off
   grunt.registerTask("default", ['cssmin','uglify']);
   
-  grunt.registerTask("watchcss", ['watch:css']);
-  grunt.registerTask("watchjs", ['watch:js']);
+  grunt.registerTask("watch-css", ['watch:css']);
+  grunt.registerTask("watch-js", ['watch:js']);
+  grunt.registerTask("watch-angular", ['watch:angular']); // Used during dev of Angular Functionality
     
 };

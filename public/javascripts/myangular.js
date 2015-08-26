@@ -1,0 +1,1 @@
+var depWitApp=angular.module("depWit",[]);depWitApp.controller("AmountCtrl",["$scope",function(a){a.amount=0,a.add=function(a,b){return b?isNaN(parseFloat(a))||isNaN(parseFloat(b))?"Error: Invalid Input":parseFloat(b)>=0?(parseFloat(a)+parseFloat(b)).toFixed(2):"Error: Invalid Input":parseFloat(a).toFixed(2)}}]);

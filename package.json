@@ -16,7 +16,18 @@
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0"
   },
-  "keywords": [],
+  "keywords": [
+	"rorynee",
+	"Node.js",
+    "node",
+    "bower",
+    "grunt",
+    "angular",
+    "express",
+	"javascript",
+	"npm",
+	"mvc"
+	],
   "bugs": {
     "url": "null"
   },
