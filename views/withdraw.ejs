@@ -76,7 +76,7 @@
                                     
                                 <div data-ng-controller="AmountCtrl" >
                                     
-                                        <p>Your projected balance is : &euro;  {{ add(<%= user.balance.toFixed(2) %>,amount)}} </p>
+                                        <p>Your projected balance is : &euro;  {{ add(<%= user.balance.toFixed(2) %>,amount,"with")}} </p>
                                     
 
 				<% if(typeof message !== 'undefined'){ %>

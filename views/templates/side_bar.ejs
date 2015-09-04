@@ -4,20 +4,20 @@
          <% if(sess.role == 1){ %>
 			<h3>Account Options</h3>
 			<ul class="toggle">
-				<li class="icn_categories"><a href="dashboard/admin/<%= sess.user_id %>">List Accounts</a></li>
-				<li class="icn_view_users"><a href="dashboard/add_account/<%= sess.user_id %>">Add Account</a></li>
+				<li class="icn_categories"><a href="../../dashboard/admin/<%= sess.user_id %>">List Accounts</a></li>
+				<li class="icn_view_users"><a href="../../dashboard/add_account/<%= sess.user_id %>">Add Account</a></li>
 			</ul>
 			
 			<h3>My Account</h3>
 			<ul class="toggle">
-				<li class="icn_profile"><a href="dashboard/details/<%= sess.user_id %>">Update Account</a></li>
+				<li class="icn_profile"><a href="../../dashboard/details/<%= sess.user_id %>">Update Account</a></li>
 			</ul>
 			<h3>Reports</h3>
 			<ul class="toggle">
-				<li class="icn_photo"><a href="dashboard/top_balances/<%= sess.user_id %>">Top Balances</a></li>
-				<li class="icn_photo"><a href="dashboard/top_region/<%= sess.user_id %>">Top Regions</a></li>
-				<li class="icn_photo"><a href="dashboard/deposits_by_day/<%= sess.user_id %>">View Deposits By Day</a></li>
-				<li class="icn_photo"><a href="dashboard/withdraw_by_day/<%= sess.user_id %>">View Withdrawals By Day</a></li>
+				<li class="icn_photo"><a href="../../dashboard/top_balances/<%= sess.user_id %>">Top Balances</a></li>
+				<li class="icn_photo"><a href="../../dashboard/top_region/<%= sess.user_id %>">Top Regions</a></li>
+				<li class="icn_photo"><a href="../../dashboard/deposits_by_day/<%= sess.user_id %>">View Deposits By Day</a></li>
+				<li class="icn_photo"><a href="../../dashboard/withdraw_by_day/<%= sess.user_id %>">View Withdrawals By Day</a></li>
 			</ul>
 			
 		

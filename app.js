@@ -52,6 +52,7 @@ app.use('/login', login);
 app.use('/signup', signup);
 app.use('/logout', logout);
 app.use('/dashboard/user/',user_account);
+app.use('/dashboard/admin/',user_account);
 app.use('/dashboard/deposit/',deposit);
 app.use('/dashboard/withdrawal/',withdraw);
 app.use('/dashboard/history/',history);

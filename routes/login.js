@@ -40,18 +40,6 @@ router.post('/', function(req, res, next) {
             
             var hashpass = md5(pword);
             
-            //connection.connect();
-            
-//            connection.connect(function(err){
-//                if(!err) {
-//                    console.log("Database is connected ... \n\n");  
-//                } else {
-//                    console.log("Error connecting database ... \n\n");  
-//                }
-//            });
-
-            //var query = connection.query('CALL CHECK_LOGIN_DETAILS("'+uname+'","'+hashpass+'")', function(err, rows, fields) {
-            
             pool.getConnection(function(err, connection) {
                 
                 if(!err) {
@@ -70,16 +58,6 @@ router.post('/', function(req, res, next) {
                 console.log("rows.length:"+rows.length);
                 if(rows[0].length !== 0 ){
                       console.log( query.sql );
-                        //console.log( rows[0][0].first_name );
-                        //console.log(fields);
-                        //console.log( rows[0] );
-                        //console.log("rows.length -> " +rows.length);
-                        
-                        //for (var i = 0; i < rows.length; i++) {
-                        //    console.log(rows[0][i].first_name);
-                        //};
-                        
-                        // Add session variables used to secure pages and for role controle
 
                         sess.user_id = rows[0][0].account_no;
                         sess.fname = rows[0][0].first_name;
@@ -87,7 +65,11 @@ router.post('/', function(req, res, next) {
                         sess.role = rows[0][0].user_roles_role_id;
                         sess.user_token = rows[0][0].account_no;
                         
-                        res.redirect('/dashboard/user/'+sess.user_id);
+                        if(sess.role === 1){
+                            res.redirect('/dashboard/admin/'+sess.user_id); 
+                        }else{
+                            res.redirect('/dashboard/user/'+sess.user_id);
+                        }    
                     
                 }else{
                     req.session.destroy();

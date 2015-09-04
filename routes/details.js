@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var dbConfig = require('../dbconfig');
 var mysql      = require('mysql');
+var md5 = require('MD5');
 var htmlspecialchars = require('htmlspecialchars');  // https://www.npmjs.com/package/htmlspecialchars
 var validator = require('validator'); //https://github.com/chriso/validator.js
 
@@ -56,6 +57,117 @@ router.put('/account_type/:id', function(req, res, next) {
     
     
     res.render('details', { title: 'Dashboard - User Details' });  
+});
+
+
+/* PUT /dashboard/account_pass/ Form. */
+router.put('/account_pass/:id', function(req, res, next) {
+    
+    
+    var pass = req.body.input_pass.trim();
+    var pass_check = req.body.input_cpass.trim();
+    
+    
+    if(pass.length >= 6 && pass_check.length >= 6 ){
+        // are the password equal to eachother
+        if(validator.equals(pass,pass_check)){
+            
+            var hashpass = md5(pass);
+            
+            pool.getConnection(function(err, connection) {
+                var affectedRows = 0;
+                if(err) {
+                        console.log("Error connecting database ... \n\n");  
+                }
+                console.log("Database is connected ... \n\n"); 
+
+                var query = connection.query('Call UPDATE_ACCOUNT_PASS(?,?)', [req.params.id,hashpass], function(err, rows) {
+                if(err)	{
+                        throw err;
+                }else{
+                    console.log(rows);
+                    console.log(rows.affectedRows);
+                    affectedRows = rows.affectedRows;
+                    console.log(affectedRows);
+
+                    if(parseInt(affectedRows) === 1 ){
+
+                        if(req.session.role === 1){
+                            //res.redirect('/dashboard/admin/'+req.session.user_id);
+                        }else{
+                            res.redirect('/dashboard/user/'+req.params.id);
+                        }
+
+                    }
+                    
+                }
+                
+                });
+
+
+                
+                connection.release();
+            }); 
+
+
+
+        }else{
+                pool.getConnection(function(err, connection) {
+                var userdetails, account_types;
+                if(err) {
+                        console.log("Error connecting database ... \n\n");  
+                }
+                console.log("Database is connected ... \n\n"); 
+
+                var query = connection.query('CALL GET_ACCOUNT_INFO(?)', [req.params.id], function(err, rows) {
+                if(err)	{
+                        throw err;
+                }
+                userdetails = rows[0][0];
+                });
+
+                var query_type = connection.query('CALL GET_ACCOUNT_TYPES()', function(err, rows) {
+                if(err)	{
+                        throw err;
+                }
+                account_types = rows[0][0];
+                res.render('details', { title: 'Dashboard - User Details',sess: req.session, user: userdetails, account_types: account_types,
+                                message_pas:"Password must be the same. Please enter a valid value." }); 
+
+                });
+                connection.release();
+            }); 
+            
+        }
+
+
+    }else{
+        pool.getConnection(function(err, connection) {
+        var userdetails, account_types;
+        if(err) {
+                console.log("Error connecting database ... \n\n");  
+        }
+        console.log("Database is connected ... \n\n"); 
+
+        var query = connection.query('CALL GET_ACCOUNT_INFO(?)', [req.params.id], function(err, rows) {
+        if(err)	{
+                throw err;
+        }
+        userdetails = rows[0][0];
+        });
+
+        var query_type = connection.query('CALL GET_ACCOUNT_TYPES()', function(err, rows) {
+        if(err)	{
+                throw err;
+        }
+        account_types = rows[0][0];
+        res.render('details', { title: 'Dashboard - User Details',sess: req.session, user: userdetails, account_types: account_types,
+                        message_pas:"Password must be 6 or more characters. Please enter a valid value." }); 
+
+        });
+        connection.release();
+    }); 
+    }
 });
 
 /* PUT /dashboard/update/ Form. */

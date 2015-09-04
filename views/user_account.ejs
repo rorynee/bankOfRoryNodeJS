@@ -8,7 +8,8 @@
 
 
 <%
-		}else{
+		}
+        }        
 %>
 
 
@@ -18,9 +19,9 @@
 	 <% if(sess.role == 1){ %>
                 <header id="header">
 			<hgroup>
-				<h1 class="site_title">Bank of Rory - <a href="dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
-				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="dashboard/user_details/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
-				div class="btn_view_site"><a href="/logout">Log Out</a></div>
+				<h1 class="site_title">Bank of Rory - <a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
+				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="/dashboard/admin/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
+				<div class="btn_view_site"><a href="/logout">Log Out</a></div>
 			</hgroup>
 		</header> <!-- end of header bar -->
 		
@@ -28,7 +29,7 @@
 			<div class="user">
 			</div>
 			<div class="breadcrumbs_container">
-				<article class="breadcrumbs"><a class="current" href="dashboard/admin/<%= sess.user_id %>">Dashboard</a> </article>
+				<article class="breadcrumbs"><a class="current" href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a> </article>
 			</div>
 		</section><!-- end of secondary bar -->
 		
@@ -57,11 +58,9 @@
 
 	<section id="main" class="column">
 	 
-	  <div class="clear"></div><!-- end of post new article -->
-
-	  <% if(sess.role == 1 ){ %>
-	    
-	   
+	  <div class="clear"></div>
+	  <% if(sess.role == 1){%>
+ 
 	  <% } else { %>
 	  <article class="module width_full">
 		 <header><h3>Account Overview</h3></header>
@@ -121,12 +120,7 @@
 <% include templates/footer_dash.ejs %>
 
 
-<%
-                }
-
-	}	
-
- }else{ %>
+<% } else{ %>
 
     
      <% include error_dash.ejs %>

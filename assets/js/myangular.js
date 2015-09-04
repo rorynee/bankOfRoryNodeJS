@@ -5,13 +5,16 @@ depWitApp.controller('AmountCtrl', ['$scope', function($scope) {
   
         $scope.amount = 0.00;
         
-        $scope.add = function(bal,val) { 
+        $scope.add = function(bal,val,action) { 
             
             if(val){
                 if(!isNaN(parseFloat(bal)) && !isNaN(parseFloat(val))){
-                    if(parseFloat(val) >= 0){
+                    if(parseFloat(val) >= 0 && action.toString() === "depo"){
                         return (parseFloat(bal) + parseFloat(val)).toFixed(2);
+                    }else if(parseFloat(val) >= 0 && action.toString() === "with"){
+                        return (parseFloat(bal) - parseFloat(val)).toFixed(2);
                     }
+                    
                     return "Error: Invalid Input";  
                 }else{
                      return "Error: Invalid Input";
@@ -22,37 +25,3 @@ depWitApp.controller('AmountCtrl', ['$scope', function($scope) {
            
         };
 }]);
-/*depWitApp.controller('AmountCtrl', function ($scope)
-{
-	$scope.data = [{
-            amount: '0.00'
-        }];
-});*/
-/*
-.directive('projectedBalance', function () 
- { 
- 	return { 
- 		restrict: 'E',                
- 		link: function (scope, element, attrs) 
- 		{ 
-                    console.log(scope);
-                    console.log(element);
-                    console.log(attrs);
-                    
-                    
- 			element.bind('mouseenter', function () 
- 			{ 
- 				element[0].innerText = "Rolled Over"; 
- 			}); 
- 
- 
- 			element.bind('mouseleave', function () 
- 			{ 
- 				element[0].innerText = "Rolled Out"; 
- 			}); 
- 		} 
- 	} 
-});
-</projected-balance>
-<projected-balance balance=<%= user.balance.toFixed(2) %> >
-*/
