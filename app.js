@@ -18,6 +18,8 @@ var deposit = require('./routes/deposit');
 var withdraw = require('./routes/withdraw');
 var history = require('./routes/history');
 var details = require('./routes/details');
+var errorDB = require('./routes/error_db');
+var addAccount = require('./routes/add_account');
 
 var app = express();
 
@@ -57,6 +59,8 @@ app.use('/dashboard/deposit/',deposit);
 app.use('/dashboard/withdrawal/',withdraw);
 app.use('/dashboard/history/',history);
 app.use('/dashboard/',details);
+app.use('/dashboard/error/',errorDB);
+app.use('/dashboard/add_account/',addAccount);
 
 
 

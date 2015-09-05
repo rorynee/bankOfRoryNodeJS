@@ -22,7 +22,7 @@ router.get('/:id', function(req, res, next) {
     console.log( req.session.user_id );
     console.log( req.params.id );
     
-    if(new String(req.session.user_id).valueOf() === new String(req.params.id).valueOf()){
+    if(new String(req.session.user_id).valueOf() === new String(req.params.id).valueOf() || req.session.role === 1){
     
         var userdetails;
         pool.getConnection(function(err, connection) {
@@ -68,7 +68,7 @@ router.put('/:id', function(req, res, next) {
         console.log( amount );
 	// is the balance a floating number
 	if(validator.isFloat(amount,{ min: 0.01, max: 9999999999999.99 } )){
-		// is the balance between this range i.e. decimal(13,2) in MySQL
+		
         
                         var userdetails;
                         pool.getConnection(function(err, connection) {
@@ -91,13 +91,7 @@ router.put('/:id', function(req, res, next) {
                                 console.log(rows.affectedRows);
                          
                                 if(rows.affectedRows === 1){
-                                       /*
-                                       $db->commit();
-                                       $user_details = getAccount($value);
-                                       $message =  array("message" =>"Thank You. Your Money has been Deposited");
-                                       $app->render('../api/resources/deposit.php', array('finish' => $message,'user' => $user_details ));
-                                       */
-                                      // CALL GET_ACCOUNT_INFO(req.params)
+                                       
                                            var query = connection.query('CALL GET_ACCOUNT_INFO(?)',
                                                            [req.params.id], function(err, rows) {
 
@@ -110,27 +104,12 @@ router.put('/:id', function(req, res, next) {
                                            //connection.release();
                                        });
                                }else{
-//                                    var userdetails;
-//                                   pool.getConnection(function(err, connection) {
-//
-//                                           if(!err) {
-//                                                   console.log("Database is connected ... \n\n");  
-//                                           } else {
-//                                                   console.log("Error connecting database ... \n\n");  
-//                                           }
+                                    if(req.session.role === 1){
+                                        res.redirect('/dashboard/error/'+req.session.user_id);
+                                    }else{
+                                        res.redirect('/dashboard/error/'+req.params.id);
+                                    }
 
-                                           // CALL GET_ACCOUNT_INFO(req.params)
-                                           var query = connection.query('CALL GET_ACCOUNT_INFO(?)',
-                                                           [req.params.id], function(err, rows) {
-
-                                           if(err)	{
-                                                   throw err;
-                                           }
-                                           userdetails = rows[0][0];
-                                           var message =  "Database Error. Please Try Again Later.";
-                                           res.render('deposit', { title: 'Dashboard - Deposit', sess: req.session, user: userdetails,message: message }); 
-//                                           connection.release();
-                                       });
                                 }                           
                                 connection.release();                           
                                 });
@@ -159,9 +138,6 @@ router.put('/:id', function(req, res, next) {
                     connection.release();
                 });
             });
-            
-            //var message = "Invalid number entered. Please Try Again Later.";
-            //res.render('deposit', { title: 'Dashboard - Deposit', sess: req.session, user: userdetails,message: message }); 
 	}
 });
 

@@ -38,7 +38,7 @@ router.get('/details/:id', function(req, res, next) {
                     if(err)	{
                             throw err;
                     }
-                    account_types = rows[0][0];
+                    account_types = rows[0];
                     res.render('details', { title: 'Dashboard - User Details', sess: req.session, user: userdetails, account_types: account_types}); 
                     });
                     connection.release();
@@ -48,15 +48,145 @@ router.get('/details/:id', function(req, res, next) {
 /* PUT /dashboard/update_balance/ Form. */
 router.put('/update_balance/:id', function(req, res, next) {
     
+    //var account_num = htmlspecialchars(req.body.account_num.trim());
+    var balance = htmlspecialchars(req.body.balance.trim());
     
-    res.render('details', { title: 'Dashboard - User Details' });  
+    if(validator.isFloat(balance,{ min: 0.01, max: 9999999999999.99 } )){
+        
+        pool.getConnection(function(err, connection) {
+                var affectedRows;
+                if(err) {
+                        console.log("Error connecting database ... \n\n");  
+                }
+                console.log("Database is connected ... \n\n"); 
+                
+                
+                var query_type = connection.query('Call UPDATE_BALANCE(?,?)',
+                                            [req.params.id,balance], function(err, rows) {
+                if(err)	{
+                        throw err;
+                }
+                
+                console.log(rows);
+                console.log(rows.affectedRows);
+                affectedRows = rows.affectedRows;
+                console.log(affectedRows);
+                
+                if(parseInt(affectedRows) === 1 ){
+                    res.redirect('/dashboard/admin/'+req.session.user_id);
+                }else{
+                    res.redirect('/dashboard/error/'+req.session.user_id);
+                }
+                
+                });
+                connection.release();
+            }); 
+        
+        
+    }else{
+         pool.getConnection(function(err, connection) {
+                var userdetails, account_types;
+                if(err) {
+                        console.log("Error connecting database ... \n\n");  
+                }
+                console.log("Database is connected ... \n\n"); 
+
+                var query = connection.query('CALL GET_ACCOUNT_INFO(?)', [req.params.id], function(err, rows) {
+                if(err)	{
+                        throw err;
+                }
+                userdetails = rows[0][0];
+                });
+
+                var query_type = connection.query('CALL GET_ACCOUNT_TYPES()', function(err, rows) {
+                if(err)	{
+                        throw err;
+                }
+                account_types = rows[0];
+                res.render('details', { title: 'Dashboard - User Details',sess: req.session, user: userdetails, account_types: account_types,
+                                message_bal:"Invalid number entered. Please enter a valid value." }); 
+
+                });
+                connection.release();
+            }); 
+    }
+      
 });
 
 /* PUT /dashboard/account_type/ Form. */
 router.put('/account_type/:id', function(req, res, next) {
+    //console.log(req.params.id);
+    var id = req.params.id;
+    var account_type = htmlspecialchars(req.body.input_account.trim());
+    
+    if(new String(req.session.role).valueOf() === "1" ){
+        
+        if(validator.isInt(account_type,  { min: 1, max: 2 } )){
+            
+            pool.getConnection(function(err, connection) {
+                var affectedRows;
+                if(err) {
+                        console.log("Error connecting database ... \n\n");  
+                }
+                console.log("Database is connected ... \n\n"); 
+                
+                
+                var query_type = connection.query('CALL UPDATE_ACCOUNT_type(?,?)',
+                                            [id,account_type], function(err, rows) {
+                if(err)	{
+                        throw err;
+                }
+                //console.log(query_type);
+                console.log(rows);
+                console.log(rows.affectedRows);
+                affectedRows = rows.affectedRows;
+                console.log(affectedRows);
+                
+
+                if(parseInt(affectedRows) === 1 ){
+                    //console.log('redirected to -> /dashboard/admin/'+req.session.user_id);
+                    res.redirect('/dashboard/admin/'+req.session.user_id);
+
+                }else{
+                    res.redirect('/dashboard/error/'+req.session.user_id);
+                }
+                
+                });
+                connection.release();
+            }); 
+            
+        }else{
+            pool.getConnection(function(err, connection) {
+                var userdetails, account_types;
+                if(err) {
+                        console.log("Error connecting database ... \n\n");  
+                }
+                console.log("Database is connected ... \n\n"); 
+
+                var query = connection.query('CALL GET_ACCOUNT_INFO(?)', [req.params.id], function(err, rows) {
+                if(err)	{
+                        throw err;
+                }
+                userdetails = rows[0][0];
+                });
+
+                var query_type = connection.query('CALL GET_ACCOUNT_TYPES()', function(err, rows) {
+                if(err)	{
+                        throw err;
+                }
+                account_types = rows[0];
+                res.render('details', { title: 'Dashboard - User Details',sess: req.session, user: userdetails, account_types: account_types,
+                                message_acc:"Account type must be Current or Student. Please enter a valid value." }); 
+
+                });
+                connection.release();
+            }); 
+        }    
+    }else{
+        res.redirect('/logout');
+    }
     
     
-    res.render('details', { title: 'Dashboard - User Details' });  
 });
 
 
@@ -93,11 +223,18 @@ router.put('/account_pass/:id', function(req, res, next) {
                     if(parseInt(affectedRows) === 1 ){
 
                         if(req.session.role === 1){
-                            //res.redirect('/dashboard/admin/'+req.session.user_id);
+                            res.redirect('/dashboard/admin/'+req.session.user_id);
                         }else{
                             res.redirect('/dashboard/user/'+req.params.id);
                         }
 
+                    }else{
+                        if(req.session.role === 1){
+                            res.redirect('/dashboard/error/'+req.session.user_id);
+                        }else{
+                            res.redirect('/dashboard/error/'+req.params.id);
+                        }
+                    
                     }
                     
                 }
@@ -130,7 +267,7 @@ router.put('/account_pass/:id', function(req, res, next) {
                 if(err)	{
                         throw err;
                 }
-                account_types = rows[0][0];
+                account_types = rows[0];
                 res.render('details', { title: 'Dashboard - User Details',sess: req.session, user: userdetails, account_types: account_types,
                                 message_pas:"Password must be the same. Please enter a valid value." }); 
 
@@ -160,7 +297,7 @@ router.put('/account_pass/:id', function(req, res, next) {
         if(err)	{
                 throw err;
         }
-        account_types = rows[0][0];
+        account_types = rows[0];
         res.render('details', { title: 'Dashboard - User Details',sess: req.session, user: userdetails, account_types: account_types,
                         message_pas:"Password must be 6 or more characters. Please enter a valid value." }); 
 
@@ -179,7 +316,29 @@ router.put('/update/:id', function(req, res, next) {
     var	street = htmlspecialchars(req.body.input_street.trim());
     var	city = htmlspecialchars(req.body.input_city.trim());
     var	country = htmlspecialchars(req.body.input_country.trim());
-    
+    var userdetails, account_types;
+    pool.getConnection(function(err, connection) {
+        
+        if(err) {
+                console.log("Error connecting database ... \n\n");  
+        }
+        console.log("Database is connected ... \n\n"); 
+
+        var query = connection.query('CALL GET_ACCOUNT_INFO(?)', [req.params.id], function(err, rows) {
+        if(err)	{
+                throw err;
+        }
+        userdetails = rows[0][0];
+        });
+
+        var query_type = connection.query('CALL GET_ACCOUNT_TYPES()', function(err, rows) {
+        if(err)	{
+                throw err;
+        }
+        account_types = rows[0];
+        });
+        connection.release();
+    }); 
 
     if(fname.length > 0 && lname.length > 0){
 
@@ -212,9 +371,16 @@ router.put('/update/:id', function(req, res, next) {
                                                 if(parseInt(affectedRows) === 1 ){
                                                     
                                                     if(req.session.role === 1){
-                                                        //res.redirect('/dashboard/admin/'+req.session.user_id);
+                                                        res.redirect('/dashboard/admin/'+req.session.user_id);
                                                     }else{
                                                         res.redirect('/dashboard/user/'+req.params.id);
+                                                    }
+
+                                                }else{
+                                                    if(req.session.role === 1){
+                                                        res.redirect('/dashboard/error/'+req.session.user_id);
+                                                    }else{
+                                                        res.redirect('/dashboard/error/'+req.params.id);
                                                     }
 
                                                 }
@@ -228,88 +394,21 @@ router.put('/update/:id', function(req, res, next) {
                                         });
 
                             }else{
-                                pool.getConnection(function(err, connection) {
-                                                var userdetails, account_types;
-                                                if(err) {
-                                                        console.log("Error connecting database ... \n\n");  
-                                                }
-                                                console.log("Database is connected ... \n\n"); 
 
-                                                var query = connection.query('CALL GET_ACCOUNT_INFO(?)', [req.params.id], function(err, rows) {
-                                                if(err)	{
-                                                        throw err;
-                                                }
-                                                userdetails = rows[0][0];
-                                                });
-
-                                                var query_type = connection.query('CALL GET_ACCOUNT_TYPES()', function(err, rows) {
-                                                if(err)	{
-                                                        throw err;
-                                                }
-                                                account_types = rows[0][0];
-                                                res.render('details', { title: 'Dashboard - User Details', sess: req.session, user: userdetails, account_types: account_types,
+                                   res.render('details', { title: 'Dashboard - User Details', sess: req.session, user: userdetails, account_types: account_types,
                                                             message_up:"A full address must be provided. Please enter a valid value." }); 
-                                                });
-                                                connection.release();
-                                    }); 
-                                   
                             }
             }else{
-                pool.getConnection(function(err, connection) {
-                            var userdetails, account_types;
-                            if(err) {
-                                    console.log("Error connecting database ... \n\n");  
-                            }
-                            console.log("Database is connected ... \n\n"); 
 
-                            var query = connection.query('CALL GET_ACCOUNT_INFO(?)', [req.params.id], function(err, rows) {
-                            if(err)	{
-                                    throw err;
-                            }
-                            userdetails = rows[0][0];
-                            });
-
-                            var query_type = connection.query('CALL GET_ACCOUNT_TYPES()', function(err, rows) {
-                            if(err)	{
-                                    throw err;
-                            }
-                            account_types = rows[0][0];
-                            res.render('details', { title: 'Dashboard - User Details', sess: req.session, user: userdetails, account_types: account_types,
-                                        message_up:"Age is invalid. You must be over 18 to open an account. Please enter a valid value." }); 
-                            });
-                            connection.release();
-                }); 
-                	
+               res.render('details', { title: 'Dashboard - User Details', sess: req.session, user: userdetails, account_types: account_types,
+                                        message_up:"Age is invalid. You must be over 18 to open an account. Please enter a valid value." });
             }
 
 
     }else{
-                    pool.getConnection(function(err, connection) {
-                        var userdetails, account_types;
-                        if(err) {
-                                console.log("Error connecting database ... \n\n");  
-                        }
-                        console.log("Database is connected ... \n\n"); 
-
-                        var query = connection.query('CALL GET_ACCOUNT_INFO(?)', [req.params.id], function(err, rows) {
-                        if(err)	{
-                                throw err;
-                        }
-                        userdetails = rows[0][0];
-                        });
-
-                        var query_type = connection.query('CALL GET_ACCOUNT_TYPES()', function(err, rows) {
-                        if(err)	{
-                                throw err;
-                        }
-                        account_types = rows[0][0];
-                        res.render('details', { title: 'Dashboard - User Details',sess: req.session, user: userdetails, account_types: account_types,
-                                        message_up:"First or Last the name is blank. Please enter a valid value." }); 
-                        
-                        });
-                        connection.release();
-                    }); 
-            	
+ 	
+         res.render('details', { title: 'Dashboard - User Details',sess: req.session, user: userdetails, account_types: account_types,
+                                        message_up:"First or Last the name is blank. Please enter a valid value." });
     }
     
       
@@ -318,7 +417,11 @@ router.put('/update/:id', function(req, res, next) {
 /* Delete /dashboard/update/ Form. */
 router.delete('/update/:id', function(req, res, next) {
     
-    if(req.session.role === 1 && req.session.user_id === 1 && req.params.id ===1 ){
+    console.log(req.session.role);
+    console.log(req.params.id);
+    
+    if(new String(req.session.role).valueOf() === "1" && new String(req.params.id).valueOf() === "1" ){
+         console.log("in first");
         pool.getConnection(function(err, connection) {
             var userdetails, account_types;
             if(err) {
@@ -337,14 +440,15 @@ router.delete('/update/:id', function(req, res, next) {
             if(err)	{
                     throw err;
             }
-            account_types = rows[0][0];
+            account_types = rows[0];
             res.render('details', { title: 'Dashboard - User Details',sess: req.session, user: userdetails, account_types: account_types,
                             myerror:"Admin Super User Cannot Be Deleted." }); 
 
             });
             connection.release();
         });
-    }else if(req.session.role === 2 && req.session.user_id === 2 && req.params.id ===2 ){
+    }else if(new String(req.session.role).valueOf() === "2" && new String(req.session.user_id).valueOf() === "2" && new String(req.params.id).valueOf() === "2" ){
+        console.log("in second");
         pool.getConnection(function(err, connection) {
             var userdetails, account_types;
             if(err) {
@@ -363,7 +467,7 @@ router.delete('/update/:id', function(req, res, next) {
             if(err)	{
                     throw err;
             }
-            account_types = rows[0][0];
+            account_types = rows[0];
             res.render('details', { title: 'Dashboard - User Details',sess: req.session, user: userdetails, account_types: account_types,
                             myerror:"Support Team Account Cannot Be Deleted." }); 
 
@@ -371,6 +475,7 @@ router.delete('/update/:id', function(req, res, next) {
             connection.release();
         });
     }else{
+        console.log("in third");
         
         pool.getConnection(function(err, connection) {
             var userdetails, account_types;
@@ -394,15 +499,19 @@ router.delete('/update/:id', function(req, res, next) {
                 req.session.account = "delete";
                 res.redirect('/logout');
     
-              }
+              }else{
+                    if(req.session.role === 1){
+                        res.redirect('/dashboard/error/'+req.session.user_id);
+                    }else{
+                        res.redirect('/dashboard/error/'+req.params.id);
+                    }
+                    
+                }
             });
             connection.release();
         });
         
-    }
-    
-    
-    
+    } 
 });
 
 

@@ -68,7 +68,9 @@ router.post('/', function(req, res, next) {
                                                                 [fname,lname,email,age,street,city,country,hashpass], function(err, rows) {
 
                                                     if(err)	{
-                                                        if(err.code !== 'ER_DUP_ENTRY'){
+                                                        if(err.code === 'ER_DUP_ENTRY'){
+                                                            res.render('signup', { title: 'Sign Up',message: "The Username/Email already exists. Please enter a valid value." }); 
+                                                        }else{
                                                             throw err;
                                                         }   
                                                     }else{
@@ -144,11 +146,6 @@ router.post('/', function(req, res, next) {
 
             res.render('signup', { title: 'Sign Up',message:"Email is not a valid. Please enter a valid value." });	
     }
-    
-            
-    
-    
-  //res.render('signup', { title: 'Sign Up' });
 });
 
 module.exports = router;

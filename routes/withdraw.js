@@ -22,7 +22,7 @@ router.get('/:id', function(req, res, next) {
     console.log( req.session.user_id );
     console.log( req.params.id );
     
-    if(new String(req.session.user_id).valueOf() === new String(req.params.id).valueOf()){
+    if(new String(req.session.user_id).valueOf() === new String(req.params.id).valueOf() || req.session.role === 1){
     
         var userdetails;
         pool.getConnection(function(err, connection) {
@@ -105,18 +105,12 @@ router.put('/:id', function(req, res, next) {
                                            //connection.release();
                                        });
                                }else{
+                                    if(req.session.role === 1){
+                                        res.redirect('/dashboard/error/'+req.session.user_id);
+                                    }else{
+                                        res.redirect('/dashboard/error/'+req.params.id);
+                                    }
 
-                                           var query = connection.query('CALL GET_ACCOUNT_INFO(?)',
-                                                           [req.params.id], function(err, rows) {
-
-                                           if(err)	{
-                                                   throw err;
-                                           }
-                                           userdetails = rows[0][0];
-                                           var message =  "Database Error. Please Try Again Later.";
-                                           res.render('withdraw', { title: 'Dashboard - Withdraw', sess: req.session, user: userdetails,message: message }); 
-//                                           
-                                       });
                                 }                           
                                 connection.release();                           
                                 });

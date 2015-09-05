@@ -2,13 +2,14 @@
 	
 	if(sess.role != 1){
 	
-		if(sess.user_id != user.account_no ){
+            if(sess.user_id != user.account_no ){
 %>
                         <% include error_dash.ejs %>
 
 
 <%
-		}else{
+            }   
+        }
 %>
 
 
@@ -18,9 +19,9 @@
 	 <% if(sess.role == 1){ %>
                 <header id="header">
 			<hgroup>
-				<h1 class="site_title">Bank of Rory - <a href="dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
+				<h1 class="site_title">Bank of Rory - <a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
 				<h2 class="section_title">&nbsp;</h2>
-                                <div class="btn_view_site"><a href="dashboard/user/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
+                                <div class="btn_view_site"><a href="../../dashboard/admin/<%= sess.user_id %>"><%= sess.fname %> <%=sess.lname %></a></div>
 				<div class="btn_view_site"><a href="/logout">Log Out</a></div>
 			</hgroup>
 		</header> <!-- end of header bar -->
@@ -29,7 +30,7 @@
 			<div class="user">
 			</div>
 			<div class="breadcrumbs_container">
-				<article class="breadcrumbs"><a href="dashboard/admin/<%= sess.user_id %>">Dashboard</a>
+				<article class="breadcrumbs"><a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a>
                                 <div class="breadcrumb_divider"></div> <a href="../../dashboard/history/<%= user.account_no %>" class="current">Account History</a>  </article>
 			</div>
 		</section><!-- end of secondary bar -->
@@ -38,7 +39,7 @@
 	 <% } else { %>
                 <header id="header">
 			<hgroup>
-				<h1 class="site_title">Bank of Rory - <a href="dashboard/user/<%= user.account_no %>">Dashboard</a></h1>
+				<h1 class="site_title">Bank of Rory - <a href="../../dashboard/user/<%= user.account_no %>">Dashboard</a></h1>
 				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="/dashboard/user/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div></h2>
                                 <div class="btn_view_site"><a href="/logout">Log Out</a></div>
 			</hgroup>
@@ -62,10 +63,7 @@
 	 
 	  <div class="clear"></div><!-- end of post new article -->
 
-	  <% if(sess.role == 1 ){ %>
-	    
-	   
-	  <% } else { %>
+	  <% if(sess.role){ %>
 	  <article class="module width_full">
 		 <header><h3>Withdraw Money</h3></header>
                         <div class="module_content">
@@ -122,12 +120,7 @@
 <% include templates/footer_dash.ejs %>
 
 
-<%
-                }
-
-	}	
-
- }else{ %>
+<%}else{ %>
 
     
      <% include error_dash.ejs %>

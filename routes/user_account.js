@@ -37,18 +37,13 @@ router.get('/:id', function(req, res, next) {
                     }
                     console.log("rows.length:"+rows.length);
                     userdetails = rows[0][0];
-
-                    //res.render('user_account', { title: 'Dashboard - Admin Account', sess: req.session, user: userdetails });  
-
-
-                    //connection.release();
                 
                     });
-                    var query_accounts = connection.query('CALL GET_ACCOUNTS()', function(err, rows) {
+                    var query_accounts = connection.query('CALL GET_ACCOUNTS()', function(err, rows_acc) {
                     if(err)	{
                             throw err;
                     }
-                    accounts = rows[0][0];
+                    accounts = rows_acc[0];
                     
                         res.render('user_account', { title: 'Dashboard - Admin Account', sess: req.session,
                                                         user: userdetails, accounts: accounts });

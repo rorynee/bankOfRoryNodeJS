@@ -8,7 +8,8 @@
 
 
 <%
-		}else{
+	}
+    }    
 %>
 
 
@@ -18,9 +19,9 @@
 	 <% if(sess.role == 1){ %>
                 <header id="header">
 			<hgroup>
-				<h1 class="site_title">Bank of Rory - <a href="dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
+				<h1 class="site_title">Bank of Rory - <a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
 				<h2 class="section_title">&nbsp;</h2>
-                                <div class="btn_view_site"><a href="dashboard/user/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
+                                <div class="btn_view_site"><a href="../../dashboard/admin/<%= sess.user_id %>"><%= sess.fname %> <%=sess.lname %></a></div>
 				<div class="btn_view_site"><a href="/logout">Log Out</a></div>
 			</hgroup>
 		</header> <!-- end of header bar -->
@@ -29,7 +30,7 @@
 			<div class="user">
 			</div>
 			<div class="breadcrumbs_container">
-				<article class="breadcrumbs"><a href="dashboard/admin/<%= sess.user_id %>">Dashboard</a>
+				<article class="breadcrumbs"><a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a>
                                 <div class="breadcrumb_divider"></div> <a href="../../dashboard/details/<%= user.account_no %>" class="current">Update Account</a>  </article>
 			</div>
 		</section><!-- end of secondary bar -->
@@ -38,7 +39,7 @@
 	 <% } else { %>
                 <header id="header">
 			<hgroup>
-				<h1 class="site_title">Bank of Rory - <a href="dashboard/user/<%= user.account_no %>">Dashboard</a></h1>
+				<h1 class="site_title">Bank of Rory - <a href="../../dashboard/user/<%= user.account_no %>">Dashboard</a></h1>
 				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="/dashboard/user/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div></h2>
                                 <div class="btn_view_site"><a href="/logout">Log Out</a></div>
 			</hgroup>
@@ -60,7 +61,7 @@
 	<section id="main" class="column">
 	  <div class="clear"></div><!-- end of post new article -->
 
-	  <% if(sess.role == 1 ){ %>
+	<% if(sess.role == 1 &&  user.account_no != 1 ){ %>
 
 	    <div class="clear"></div><!-- end of post new article --> 
             <article class="module width_full">
@@ -69,6 +70,11 @@
                                             <h1>Update Account Type</h1>
 
                                             <p>Please choose the account type. <em>Current account type is selected</em></p>
+                                            <% if(typeof message_acc !== 'undefined'){ %>
+                                                    <div class="alert alert-danger" role="alert">
+                                                            <p class="alert-link error_message">Error: <%= message_acc %> </p>
+                                                    </div>
+                                            <%  }  %>
 
                                             <form class="form-horizontal" role="form"  method="POST" action="../../dashboard/account_type/<%= user.account_no %>">
                                                             <input type="hidden" name="_method" value="PUT"/>
@@ -94,7 +100,7 @@
                                                        <tr>
                                                             <td>
                                                       <div class="form-group">
-                                                            <div class="col-sm-offset-2 col-sm-10">
+                                                            <div class="col-sm-offset-2 col-sm-12">
                                                               <button type="submit" class="btn btn-lg btn-primary btn-block">Update Account Type</button>
                                                             </div>
                                                       </div>
@@ -118,7 +124,7 @@
                                             <p>Please enter a new balance for this user. <em>Changes should only be done due to Error</em></p>
                                             <p>Balance changes are noted in the account transaction history</p>
                                             <p>&nbsp;</p>
-                                            <h3>Current Balance: &nbsp;&euro; <%= user.balance.toFixed(2) %></h3>
+                                            <p>Current Balance: &nbsp;&euro; <%= user.balance.toFixed(2) %></p>
 
                                             <% if(typeof message_bal !== 'undefined'){ %>
                                                     <div class="alert alert-danger" role="alert">
@@ -133,8 +139,8 @@
 
                                                        <tr>
                                                       <div class="form-group">
-                                                            <th><label for="balance" class="col-sm-2 control-label">Change Balance To </label></th>
-                                                            <td>&euro; &nbsp;<input type="text" class="form-control" name="balance" placeholder="New Balance" required></td>
+                                                            <th><label for="balance" class="col-sm-3 control-label">Change To</label></th>
+                                                            <td><input type="text" class="form-control" name="balance" placeholder="New Balance" required></td>
 
                                                       </div>
                                                       </tr>
@@ -158,7 +164,7 @@
 
               </article><!-- end of styles article -->
 	   
-	  <% } else { %>
+	  <% }  %>
 
 	  <article class="module width_full">
 		<header><h3>Update Account</h3></header>
@@ -248,6 +254,8 @@
                <div class="spacer"></div>
                 <!-- </div> -->
 	  </article><!-- end of styles article -->
+
+          
           <div class="spacer"></div>
             <article class="module width_full">
 		<header><h3>Delete Account</h3></header>
@@ -278,7 +286,6 @@
                         <p>&nbsp;</p>
                 </div>
                </article><!-- end of styles article -->
-
 
 
           <div class="spacer"></div>
@@ -336,7 +343,7 @@
 	  
 	  <div class="clear"></div><!-- end of post new article -->
  
-	  <% } %>
+	  
 		<div class="spacer"></div>
 
 	</section>           
@@ -344,12 +351,7 @@
 <% include templates/footer_dash.ejs %>
 
 
-<%
-                }
-
-	}	
-
- }else{ %>
+<%}else{ %>
 
     
      <% include error_dash.ejs %>

@@ -20,7 +20,7 @@
                 <header id="header">
 			<hgroup>
 				<h1 class="site_title">Bank of Rory - <a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
-				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="/dashboard/admin/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
+				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="/dashboard/admin/<%= sess.user_id %>"><%= sess.fname %> <%=sess.lname %></a></div>
 				<div class="btn_view_site"><a href="/logout">Log Out</a></div>
 			</hgroup>
 		</header> <!-- end of header bar -->
@@ -37,7 +37,7 @@
 	 <% } else { %>
                 <header id="header">
 			<hgroup>
-				<h1 class="site_title">Bank of Rory - <a href="dashboard/user/<%= user.account_no %>">Dashboard</a></h1>
+				<h1 class="site_title">Bank of Rory - <a href="../../dashboard/user/<%= user.account_no %>">Dashboard</a></h1>
 				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="/dashboard/user/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
 				<div class="btn_view_site"><a href="/logout">Log Out</a></div>
 			</hgroup>
@@ -59,9 +59,94 @@
 	<section id="main" class="column">
 	 
 	  <div class="clear"></div>
-	  <% if(sess.role == 1){%>
- 
-	  <% } else { %>
+	<% if(sess.role == 1){%>
+         <article class="module width_full">
+            <header><h3>List Accounts</h3></header>
+		<div class="module_content">
+                    <h1>Account History</h1>
+                    <table class="view_table">
+                            <tr>
+                                    <td><p><strong>Role:</strong></p></td><td>
+                            <% if(sess.role == 1){ %>
+                                    Admin Role
+                            <% }else if(sess.role == 2){ %>
+                                    Support Role
+                            <% } %></td>
+                            </tr>
+                            <tr>
+                                    <td><p><strong>Account Number:</strong></p></td><td><%= user.account_no %></td>
+                            </tr>
+                            <tr>
+                                    <td><p><strong>First Name:</strong></p></td><td><%= user.first_name %></td>
+                            </tr>
+                            <tr>
+                                    <td><p><strong>Last Name:</strong></p></td><td><%= user.last_name %></td>
+                            </tr>
+                            <tr>
+                                    <td><p><strong>Username/Email:</strong></p></td><td><%= user.email %></td>
+                            </tr>
+                            <tr>
+                                    <td><p><strong>Address:</strong></p></td><td><%= user.street %>, <%= user.city %>, <%= user.country %></td>
+                            </tr>					
+
+                            </table>
+
+                            <p>Click here to <a href="../../dashboard/details/<%= user.account_no %>">Update Account</a></p>
+                    </div>
+					
+	  </article><!-- end of styles article -->
+	  <div class="spacer"></div>
+ 	  <article class="module width_full">
+        	  <header><h3>Account Overview</h3></header>
+                    <div class="module_content">
+                        <h1>Account Overview</h1>
+                        <p>Below is a list of all the present accounts</p>
+
+                        <table id="data_table_sort" class="display">
+                            <thead>
+                                <tr>
+                                    <th>A/C No.</th>
+                                    <th>A/C Type</th>
+                                    <th>A/C Holders Name</th>
+                                    <th>Age</th>
+                                    <th>Country of Residence</th>
+                                    <th>Balance</th>
+                                    <th>Show Details</th>
+                                    <th>Show History</th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                    <% accounts.forEach(function(account){ %>
+                                        <tr>
+                                                <td><%= account.account_no %></td>
+                                                <td><% if(account.account_type_id == 1){ %>
+                                                                <p id="account_current">Current Account</p>
+                                                        <% }else{ %>
+                                                                <p id="account_student">Student Account</p>
+                                                    <% } %></td>
+                                                <td><%= account.first_name %> <%= account.last_name %></td>
+                                                <td><%= account.age %></td>
+                                                <td><%= account.country %></td>
+                                                <td>&euro; <%= account.balance.toFixed(2) %></td>
+                                                <td>
+                                                        <form action="../../dashboard/details/<%= account.account_no %>" method="GET">
+                                                                <input type="submit" value="Update" />
+                                                        </form>
+                                                </td>
+                                                <td>
+                                                        <form action="../../dashboard/history/<%= account.account_no %>" method="GET">
+                                                                <input type="submit" value="History" />
+                                                        </form>
+                                                </td>
+
+                                        </tr>
+                                    <% }); %>	
+                                </tbody>
+                        </table>
+
+                    </div>	
+	  </article><!-- end of styles article -->
+	<% } else { %>
 	  <article class="module width_full">
 		 <header><h3>Account Overview</h3></header>
 			<div class="module_content">
@@ -70,7 +155,7 @@
                                     <% if(user){ %>
                                     <table class="view_table">
                                     <tr>
-                                    <td><p><strong>Account Number:</strong></p></td><td><%= user.id %></td>
+                                    <td><p><strong>Account Number:</strong></p></td><td><%= user.account_no %></td>
                                     </tr>
                                     <tr>
                                     <td><p><strong>First Name:</strong></p></td><td><%= user.first_name %></td>

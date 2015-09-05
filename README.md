@@ -10,7 +10,7 @@ Having never covered Node.js in college. The following project was set up by mys
 
 Node.js, Express Web Framework, Sessions and MySQL throught Node.js, MD5, JavaScript, HTML5, CSS3, Bootstrap and Git
 
-Possible others: Grunt, Bower, Angular.js 
+Possible others: Grunt, Bower, Angular.js and d3 
 
 ## Assignment Outline
 

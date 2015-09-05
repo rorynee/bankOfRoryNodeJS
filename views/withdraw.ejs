@@ -8,7 +8,8 @@
 
 
 <%
-		}else{
+	}
+    }
 %>
 
 
@@ -18,9 +19,9 @@
 	 <% if(sess.role == 1){ %>
                 <header id="header">
 			<hgroup>
-				<h1 class="site_title">Bank of Rory - <a href="dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
+				<h1 class="site_title">Bank of Rory - <a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
 				<h2 class="section_title">&nbsp;</h2>
-                                <div class="btn_view_site"><a href="dashboard/user/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div>
+                                <div class="btn_view_site"><a href="../../dashboard/admin/<%= sess.user_id %>"><%= sess.fname %> <%=sess.lname %></a></div>
 				<div class="btn_view_site"><a href="/logout">Log Out</a></div>
 			</hgroup>
 		</header> <!-- end of header bar -->
@@ -29,7 +30,7 @@
 			<div class="user">
 			</div>
 			<div class="breadcrumbs_container">
-				<article class="breadcrumbs"><a class="current" href="dashboard/admin/<%= sess.user_id %>">Dashboard</a> </article>
+				<article class="breadcrumbs"><a class="current" href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a> </article>
 			</div>
 		</section><!-- end of secondary bar -->
 		
@@ -37,7 +38,7 @@
 	 <% } else { %>
                 <header id="header">
 			<hgroup>
-				<h1 class="site_title">Bank of Rory - <a href="dashboard/user/<%= user.account_no %>">Dashboard</a></h1>
+				<h1 class="site_title">Bank of Rory - <a href="../../dashboard/user/<%= user.account_no %>">Dashboard</a></h1>
 				<h2 class="section_title">&nbsp;</h2><div class="btn_view_site"><a href="/dashboard/user/<%= user.account_no %>"><%= sess.fname %> <%=sess.lname %></a></div></h2>
                                 <div class="btn_view_site"><a href="/logout">Log Out</a></div>
 			</hgroup>
@@ -62,7 +63,22 @@
 	  <div class="clear"></div><!-- end of post new article -->
 
 	  <% if(sess.role == 1 ){ %>
-	    
+	    <div class="spacer"></div>
+            <article class="module width_full">
+		<header><h3>Access Denied</h3></header>
+                <div class="module_content">
+                    <h2>Access Denied</h2>
+                        <div class="alert alert-danger" role="alert">    
+                            <p class="alert-link error_message">Sorry Access Denied.</p>
+                        </div>
+                        <div class="clear"></div>
+                        <p>&nbsp;</p>
+                </div>
+               </article><!-- end of styles article -->
+
+
+
+          <div class="spacer"></div>
 	   
 	  <% } else { %>
 	  <article class="module width_full">
@@ -134,12 +150,7 @@
 <% include templates/footer_dash.ejs %>
 
 
-<%
-                }
-
-	}	
-
- }else{ %>
+<%} else{ %>
 
     
      <% include error_dash.ejs %>

@@ -1,0 +1,183 @@
+<% if(sess.role){
+	
+	if(sess.role != 1){
+	
+		if(sess.user_id != user.account_no ){
+%>
+                        <% include error_dash.ejs %>
+
+
+<%
+	} 
+    }
+%>
+
+
+
+<% include templates/header_dash.ejs %>
+<body>
+	 <% if(sess.role == 1){ %>
+                <header id="header">
+			<hgroup>
+				<h1 class="site_title">Bank of Rory - <a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
+				<h2 class="section_title">&nbsp;</h2>
+                                <div class="btn_view_site"><a href="../../dashboard/admin/<%= sess.user_id %>"><%= sess.fname %> <%=sess.lname %></a></div>
+				<div class="btn_view_site"><a href="/logout">Log Out</a></div>
+			</hgroup>
+		</header> <!-- end of header bar -->
+		
+		<section id="secondary_bar">
+			<div class="user">
+			</div>
+			<div class="breadcrumbs_container">
+				<article class="breadcrumbs"><a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a>
+                                <div class="breadcrumb_divider"></div> <a href="../../dashboard/add_account/<%= sess.user_id %>" class="current">Add New Account</a> </article>
+			</div>
+		</section><!-- end of secondary bar -->
+		
+
+	 <% } %>
+
+        <% include templates/side_bar.ejs %>
+
+	<section id="main" class="column">
+	 
+	  <div class="clear"></div><!-- end of post new article -->
+
+	  <% if(sess.role == 1 ){ %>
+	   <div class="spacer"></div>
+            <article class="module width_full">
+                <header><h3>Add New Account</h3></header>
+                    <div class="module_content">
+                        <h1>Add New Account</h1>
+                        
+                            <% if(typeof message !== 'undefined'){ %>
+                                    <div class="alert alert-danger" role="alert">
+                                            <p class="alert-link error_message">Error: <%= message %> </p>
+                                    </div>
+                            <%  }  %>
+                            <% if(typeof success !== 'undefined'){ %>
+                                        <div class="alert alert-success" role="alert">
+                                                <p class="alert-link error_message"><%= success %> </p>
+                                        </div>
+                                        <p><--- Back to <a href="../../dashboard/user/<%= user.account_no %>">Dashboard</a></p>
+                            <%  } else {  %>
+                                <p>Please fill out the details below to create a new account</p>
+                                <form class="form-signin" role="form" method="POST" action="../../dashboard/add_account/<%= sess.user_id %>">
+                                  <table class="view_table">
+
+                                        <tr> 
+                                        <div class="form-group">
+                                              <th><label for="inputEmail4" class="col-sm-2 control-label">Username/Email</label></th>
+                                              <td><input type="email" class="form-control" name="inputEmail4" placeholder="Email Address" required autofocus></td>
+                                        </div>
+                                        </tr>
+                                        <tr>
+                                        <div class="form-group">
+                                              <th><label for="input_fname" class="col-sm-2 control-label">First Name</label></th>
+
+                                                <td><input type="text" class="form-control" name="input_fname" placeholder="First Name" required></td>
+
+
+                                        </div>
+                                        </tr>
+                                        <tr>
+                                        <div class="form-group ">
+                                              <th><label for="input_lname" class="col-sm-2 control-label">Last Name</label></th>
+
+                                               <td> <input type="text" class="form-control" name="input_lname" placeholder="Last Name" required></td>
+
+
+                                        </div>
+                                        </tr>
+                                        <tr>
+
+                                        <div class="form-group ">
+                                              <th><label for="input_age" class="col-sm-2 control-label">Age</label></th>
+
+                                                <td><input type="text" class="form-control" name="input_age" placeholder="Age" required></td>
+
+                                        </div>
+                                        </tr>
+                                        <tr>
+
+                                        <div class="form-group">
+                                              <th><label for="input_street" class="col-sm-2 control-label">Street</label></th>
+
+                                                <td><input type="text" class="form-control" name="input_street" placeholder="Street" required></td>
+
+                                        </div>
+                                        </tr>
+                                        <tr>
+
+                                        <div class="form-group">
+                                              <th><label for="input_city" class="col-sm-2 control-label">City</label></th>
+
+                                                <td><input type="text" class="form-control" name="input_city" placeholder="City" required></td>
+
+
+                                        </div>
+                                        </tr>
+                                        <tr>
+                                        <div class="form-group">
+                                              <th><label for="input_country" class="col-sm-2 control-label">Country</label></th>
+
+                                                <td><input type="text" class="form-control" name="input_country" placeholder="Country" required></td>
+
+                                        </div>
+                                        </tr>
+                                        <tr>
+
+                                        <div class="form-group">
+                                              <th><label for="input_pass" class="col-sm-2 control-label">Password</label></th>
+
+                                                <td><input type="password" class="form-control" name="input_pass" placeholder="Password" required></td>
+
+                                        </div>
+                                        </tr>
+                                        <tr>
+
+                                        <div class="form-group">
+                                              <th><label for="input_cpass" class="col-sm-2 control-label">Confirm Password</label></th>
+
+                                                <td><input type="password" class="form-control" name="input_cpass" placeholder="Confirm Password" required></td>
+
+                                        </div>
+                                        </tr>
+                                        <tr>
+
+                                        <td><div class="form-group form-group-lg">
+                                              <div class="col-sm-offset-3 col-sm-12">
+                                                <button type="submit" class="btn btn-lg btn-primary btn-block">Create Account</button>
+                                              </div>
+                                        </div></td>
+                                        <td></td>
+                                        </tr>
+
+                                       </table>
+                                    </form>
+                                <% } %>
+                     <div class="clear"></div>
+                     <p>&nbsp;</p>
+                </div>
+               </article><!-- end of styles article -->
+
+
+
+          <div class="spacer"></div>
+	   
+	  <% }  %>
+		<div class="spacer"></div>
+
+	</section>           
+        
+<% include templates/footer_dash.ejs %>
+
+
+<%} else{ %>
+
+    
+     <% include error_dash.ejs %>
+
+<% } %>
+ 

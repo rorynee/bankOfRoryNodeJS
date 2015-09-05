@@ -65,11 +65,11 @@
 	  <% if(sess.role == 1 ){ %>
 	   <div class="spacer"></div>
             <article class="module width_full">
-		<header><h3>Access Denied</h3></header>
+		<header><h3>Database Error</h3></header>
                 <div class="module_content">
-                    <h2>Access Denied</h2>
+                    <h2>Database Error</h2>
                         <div class="alert alert-danger" role="alert">    
-                            <p class="alert-link error_message">Sorry Access Denied.</p>
+                            <p class="alert-link error_message">Database Error Please try again later.</p>
                         </div>
                         <div class="clear"></div>
                         <p>&nbsp;</p>
@@ -81,69 +81,22 @@
           <div class="spacer"></div>
 	   
 	  <% } else { %>
-	  <article class="module width_full">
-		 <header><h3>Deposit Money</h3></header>
-			<div class="module_content" data-ng-app="depWit">
-				<h1>Deposit</h1>
-				<p>Please enter an amount to deposit.</p>
-				<p>Current Balance: <strong>&euro; <%= user.balance.toFixed(2) %></strong></p>
-                                <p><em>Please do not type in the EURO sign.</br></br><strong>Projected Balance Indicator</strong></br>
-                                    Type in an amount to reveal your projected balance</em></p>
-                                    
-                                <div data-ng-controller="AmountCtrl" >
-                                    
-                                        <p>Your projected balance is : &euro;  {{ add(<%= user.balance.toFixed(2) %>,amount,"depo")}} </p>
-                                    
-
-				<% if(typeof message !== 'undefined'){ %>
-                                        <div class="alert alert-danger" role="alert">
-                                                <p class="alert-link error_message">Error: <%= message %> </p>
-                                        </div>
-                                <%  }  %>
-				<% if(typeof success !== 'undefined'){ %>
-                                        <div class="alert alert-success" role="alert">
-                                                <p class="alert-link error_message"><%= success %> </p>
-                                        </div>
-                                        <p><--- Back to <a href="../../dashboard/user/<%= user.account_no %>">Dashboard</a></p>
-                                <%  } else {  %>
-				<form class="form-horizontal" role="form"  method="POST" 
-                                                      action="../../dashboard/deposit/<%= user.account_no %>">
-					 <input type="hidden" name="_method" value="PUT"/>
-				   <table class="view_table">
-				   <tr>
-				  <div class="form-group">
-					<th><label for="input_dep" class="col-sm-2 control-label">Deposit Amount</label></th>
-					<td> <input type="text" class="form-control" data-ng-model="amount" name="input_dep" placeholder="Deposit Amount" required autofocus></td>
-				  </div>
-				  </tr>
-				   <tr>
-					<td>
-				  <div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-					  <button type="submit" class="btn btn-lg btn-primary btn-block">Deposit Money</button>
-					</div>
-				  </div>
-				  </td>
-				<td></td>
-				   </tr>
-				  </table>
-                                </form>
-                                <% } %>
-                                   
-                                </div> 
-                                
-
-                		
-			
-                         </div>
-                        <p>&nbsp;</p>		
+	  <div class="spacer"></div>
+            <article class="module width_full">
+		<header><h3>Database Error</h3></header>
+                <div class="module_content">
+                    <h2>Database Error</h2>
+                        <div class="alert alert-danger" role="alert">    
+                            <p class="alert-link error_message">Database Error Please try again later.</p>
+                        </div>
+                        <div class="clear"></div>
+                        <p>&nbsp;</p>
+                         <p>&nbsp;</p>		
 				<h3>Quick Links <a href="../../dashboard/deposit/<%= user.account_no %>">Deposit Money</a>&nbsp;&nbsp;
 				<a href="../../dashboard/withdrawal/<%= user.account_no %>">Withdraw Money</a>&nbsp;&nbsp;
 				<a href="../../dashboard/history/<%= user.account_no %>">Account History</a> </h3>
-						
-						
-			<!-- </div> -->
-	  </article><!-- end of styles article -->
+                </div>
+               </article><!-- end of styles article -->
 			 
 	  <% } %>
 		<div class="spacer"></div>

@@ -20,7 +20,7 @@ router.get('/:id', function(req, res, next) {
     console.log( req.session.user_id );
     console.log( req.params.id );
     
-    if(new String(req.session.user_id).valueOf() === new String(req.params.id).valueOf()){
+    if(new String(req.session.user_id).valueOf() === new String(req.params.id).valueOf() || req.session.role === 1){
     
         
         pool.getConnection(function(err, connection) {
@@ -40,21 +40,17 @@ router.get('/:id', function(req, res, next) {
                     }
                     userdetails = rows[0][0];
                     });
-                    // Call to trans table - GET_TRANSACTIONS
+                    
                     connection.query('CALL GET_TRANSACTIONS(?)',
                                     [req.params.id], function(err, rows_trans) {
 
                     if(err)	{
                             throw err;
                     }
-                    //console.log(rows_trans[0][0]);
-                    //console.log(rows_trans[0][1]);
+                    
                     console.log(rows_trans[0]);
                     var trans = rows_trans[0];
-                    //for (var i = 0; i < rows_trans[0].length; i++) {
-                    //    trans += rows_trans[0][i];
-                    //};
-                    //console.log(trans);
+                
                     res.render('history', { title: 'Dashboard - History', sess: req.session, user: userdetails, trans: trans });  
                                        
                     connection.release();

@@ -13,12 +13,12 @@ router.get('/', function(req, res, next) {
             req.session.destroy();
     
             res.render('login', { title: 'Log In', success: "Goodbye and Thank you for your custome"  });    
-        }
+        }else{
         
-        
-        req.session.destroy();
+            req.session.destroy();
     
-        res.render('login', { title: 'Log In', success: "You Have Been Logged Out"  }); 
+            res.render('login', { title: 'Log In', success: "You Have Been Logged Out"  }); 
+        }
         
     }else{
 
