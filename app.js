@@ -20,6 +20,8 @@ var history = require('./routes/history');
 var details = require('./routes/details');
 var errorDB = require('./routes/error_db');
 var addAccount = require('./routes/add_account');
+var topBalances = require('./routes/top_balances');
+var topRegion = require('./routes/top_region');
 
 var app = express();
 
@@ -61,6 +63,8 @@ app.use('/dashboard/history/',history);
 app.use('/dashboard/',details);
 app.use('/dashboard/error/',errorDB);
 app.use('/dashboard/add_account/',addAccount);
+app.use('/dashboard/top_balances/',topBalances);
+app.use('/dashboard/top_region/',topRegion);
 
 
 

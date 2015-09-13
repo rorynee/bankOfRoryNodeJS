@@ -3,13 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	
-	<title>Bank of Rory - 
-            <% if ( typeof title !== 'undefined'){ %>
-                <%= title %>
-            <% }else{%>
-                Error
-            <%}%>
-        </title>
+	
 	
         <!--[if lt IE 9]>
 	<link rel="stylesheet" href="../../stylesheets/ie.css" type="text/css" media="screen" />
@@ -19,6 +13,17 @@
         <!-- Full Min js -->
         <script src="../../javascripts/dashboard.min.js"></script>
         <script src="../../javascripts/myangular.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+
+        <title>Bank of Rory - 
+            <% if ( typeof title !== 'undefined'){ %>
+                <%= title %>
+                    
+            <% }else{%>
+                Error
+            <%}%>
+        </title>
+
 
         <!-- Full min css -->
         <link href="../../stylesheets/dashboard.min.css" rel="stylesheet" type="text/css">

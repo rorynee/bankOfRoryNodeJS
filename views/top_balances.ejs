@@ -1,0 +1,160 @@
+<% if(sess.role){
+	
+	if(sess.role != 1){
+	
+		if(sess.user_id != user.account_no ){
+%>
+                        <% include error_dash.ejs %>
+
+
+<%
+	} 
+    }
+%>
+
+
+
+<% include templates/header_dash.ejs %>
+<body>
+	 <% if(sess.role == 1){ %>
+                <header id="header">
+			<hgroup>
+				<h1 class="site_title">Bank of Rory - <a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
+				<h2 class="section_title">&nbsp;</h2>
+                                <div class="btn_view_site"><a href="../../dashboard/admin/<%= sess.user_id %>"><%= sess.fname %> <%=sess.lname %></a></div>
+				<div class="btn_view_site"><a href="/logout">Log Out</a></div>
+			</hgroup>
+		</header> <!-- end of header bar -->
+		
+		<section id="secondary_bar">
+			<div class="user">
+			</div>
+			<div class="breadcrumbs_container">
+				<article class="breadcrumbs"><a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a>
+                                <div class="breadcrumb_divider"></div> <a href="../../dashboard/top_balances/<%= sess.user_id %>" class="current">Report - Top 25 Balances</a> </article>
+			</div>
+		</section><!-- end of secondary bar -->
+		
+
+	 <% } %>
+
+        <% include templates/side_bar.ejs %>
+
+	<section id="main" class="column">
+	 
+	  <div class="clear"></div><!-- end of post new article -->
+
+	  <div class="spacer"></div>
+            <article class="module width_full">
+                <header><h3>Report - Top 25 Balances</h3></header>
+                    <div class="module_content">
+                        <h1>Report - Top 25 Balances</h1>
+                        <p>below is a list of all the top balance in the Bank Of Rory. Included is a Donut chart showing the Top 25 Accounts.</p>
+                        
+                        <p>&nbsp;</p>
+                        <div style="float:left; width: 500px;">
+                        <table class="table table-striped">
+                            <thead>
+                                    <tr>
+                                            <th id="centertext">A/C No</th>
+                                            <th id="centertext">Name</th>
+                                            <th id="centertext">Country</th>
+                                            <th id="centertext">A/C Type</th>
+                                            <th id="centertext">Balance</th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                <% balances.forEach(function(bal){ %>
+                                        <tr>
+                                                <td id="centertext"><%= bal.users_account_no %></td>
+                                                <td id="centertext"><%= bal.first_name %> <%= bal.last_name %></td>
+                                                <td id="centertext"><%= bal.country %></td>
+                                                <td id="centertext"><% if(bal.type == 'Current'){ %>
+                                                            <p id="account_current">Current</p>
+                                                    <% }else{ %>
+                                                            <p id="account_student">Student</p>
+                                                <% } %></td>
+                                                <td id="centertext">&euro; <%= bal.balance.toFixed(2) %></td>
+                                        </tr>
+                                    <% }); %>	
+                            </tbody>
+                    </table>
+
+
+
+                        </div>
+                        <div id="topbalances" style="float:left;">
+                        
+                        <svg class="chart"></svg>
+                        
+                        <script>
+                        
+                        var data = JSON.parse(JSON.stringify(<%- JSON.stringify(balances) %>));
+                        var max = d3.max(data, function(d) { return d.balance; });
+                        var width = 600;
+                        var height = 600;
+                        var rads = 250;
+                        var arcWidth = 75;
+
+                        var colorscale = d3.scale.linear()
+                            .domain([0, max])
+                            .range([d3.rgb("#D1E0B2"),d3.rgb("#5C8A00")]);
+
+                        var chart = d3.select(".chart")
+                            .attr("width", width)
+                            .attr("height", height);
+
+                        var group = chart.append("g")
+                            .attr("transform", "translate(300,300)");
+
+                        var arc = d3.svg.arc()
+                                .innerRadius(rads - arcWidth)
+                                .outerRadius(rads);
+
+                        var pie = d3.layout.pie()
+                                 .value(function (d) { return d.balance;});
+                        
+                        var arcs = group.selectAll(".arc")
+                                 .data(pie(data))
+                                 .enter()
+                                    .append("g")
+                                        .attr("class", "arc");
+                        
+                        arcs.append("path")
+                            .attr("d",arc)
+                            .style("fill", function(d) { return colorscale(d.data.balance); });
+
+                        arcs.append("text")
+                            .attr("text-anchor", "middle")
+                            .style("font-size","1em")
+                            .attr("transform", function (d) { return "translate("+ arc.centroid(d)+")";})
+                            .text(function (d){ return d.data.users_account_no; });
+
+
+                        </script>
+
+                        </div>
+                        
+ 
+                     <div class="clear"></div>
+                     <p>&nbsp;</p>
+                     <p>&nbsp;</p>
+                     <p>&nbsp;</p>
+                </div>
+                 <div style="clear:both;"></div>
+               </article><!-- end of styles article -->
+
+          <div class="spacer"></div>
+
+	</section>           
+        
+<% include templates/footer_dash.ejs %>
+
+
+<%} else{ %>
+
+    
+     <% include error_dash.ejs %>
+
+<% } %>
+ 

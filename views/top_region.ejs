@@ -1,0 +1,177 @@
+<% if(sess.role){
+	
+	if(sess.role != 1){
+	
+		if(sess.user_id != user.account_no ){
+%>
+                        <% include error_dash.ejs %>
+
+
+<%
+	} 
+    }
+%>
+
+
+
+<% include templates/header_dash.ejs %>
+<body>
+	 <% if(sess.role == 1){ %>
+                <header id="header">
+			<hgroup>
+				<h1 class="site_title">Bank of Rory - <a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a></h1>
+				<h2 class="section_title">&nbsp;</h2>
+                                <div class="btn_view_site"><a href="../../dashboard/admin/<%= sess.user_id %>"><%= sess.fname %> <%=sess.lname %></a></div>
+				<div class="btn_view_site"><a href="/logout">Log Out</a></div>
+			</hgroup>
+		</header> <!-- end of header bar -->
+		
+		<section id="secondary_bar">
+			<div class="user">
+			</div>
+			<div class="breadcrumbs_container">
+				<article class="breadcrumbs"><a href="../../dashboard/admin/<%= sess.user_id %>">Dashboard</a>
+                                <div class="breadcrumb_divider"></div> <a href="../../dashboard/top_region/<%= sess.user_id %>" class="current">Report - Top Regions By Balance</a> </article>
+			</div>
+		</section><!-- end of secondary bar -->
+		
+
+	 <% } %>
+
+        <% include templates/side_bar.ejs %>
+
+	<section id="main" class="column">
+	 
+	  <div class="clear"></div><!-- end of post new article -->
+
+	  <div class="spacer"></div>
+            <article class="module width_full">
+                <header><h3>Report - Top Regions By Balance</h3></header>
+                    <div class="module_content">
+                        <h1>Report - Top Regions By Balance</h1>
+                        <p>below is a list of all countries with the combined total balances of its customers and the amount<br/>
+					of customers per each country.</p>
+                        
+                        <p>&nbsp;</p>
+                        <div style="float:left; width: 500px;">
+                        <table class="table table-striped">
+                            <thead>
+                                    <tr>
+                                            <th id="centertext">No</th>
+                                            <th id="centertext">Country Name</th>
+                                            <th id="centertext">No. of Customers</th>
+                                            <th id="centertext">Total Blances</th>
+                                            <th id="centertext">No. of Transactions</th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                <% var count = 1;
+                                    regions.forEach(function(reg){ %>
+                                        <tr>
+                                                <td id="centertext"><%= count %></td>
+                                                <td id="centertext"><%= reg.country %></td>
+                                                <td id="centertext"><%= reg.total_cust %></td>
+                                                <td id="centertext">&euro;&nbsp;<%= reg.total_bal.toFixed(2) %></td>
+                                                <td id="centertext"><%= reg.no_of_trans %></td>
+                                        </tr>
+                                    <% count++; 
+                                            }); %>	
+                            </tbody>
+                    </table>
+
+
+
+                        </div>
+                        <div id="topbalances" style="float:left;">
+                        
+                        <svg class="chart"></svg>
+                        
+                        <script>
+                        
+                        var data = JSON.parse(JSON.stringify(<%- JSON.stringify(regions) %>));
+                        var max = d3.max(data, function(d) { return d.total_bal; });
+                        var width = 600;
+                        var height = 500;
+                        var barWidth = 40;
+                        var padding = 5;
+                        var length = Object.keys(data).length;
+
+                        var bal_scale = d3.scale.linear()
+                            .domain([0, max])
+                            .range([0, height]);
+
+                        var y_scale = d3.scale.linear()
+                            .domain([0,length])
+                            .range([(length * (barWidth+padding) - padding),0]);
+                            
+                        var colorscale = d3.scale.linear()
+                            .domain([0, max])
+                            .range([d3.rgb("#00FF80"),d3.rgb("#FF0000")]);
+
+                        var xAxis = d3.svg.axis()
+                                    .ticks(8)
+                                    .orient("bottom")
+                                    .scale(bal_scale);    
+
+                        var yAxis = d3.svg.axis()
+                                    .scale(y_scale)
+                                    .orient("left")
+                                    .ticks(length);            
+
+                        var chart = d3.select(".chart")
+                            .attr("width", width)
+                            .attr("height", height);
+
+                        var group = chart.append("g")
+                            .attr("transform", "translate(50,50)");
+
+                        var bar = group.selectAll("rect")
+                            .data(data)
+                            .attr("transform", "rotate(180)")
+                          .enter().append("rect")
+                            .attr("width", function(d) { return bal_scale(d.total_bal);})
+                            .style("fill", function(d) { return colorscale(d.total_bal); })
+                            .attr("height", barWidth )
+                            .attr("y", function(d,i) { return i * (barWidth + padding); });
+                            //.attr("y", function(d) { return height - bal_scale(d.total_bal); });
+   
+                        group.append("g")
+                            .attr("transform", "translate(0,"+ (length * (barWidth+padding) - padding) +")")
+                            .attr("fill","#E6E6E6")
+                            .attr("stroke","green")
+                            .call(xAxis);
+
+                        group.append("g")
+                            .attr("transform", "translate(-2,0)")
+                            .attr("fill","#E6E6E6")
+                            .attr("stroke","green")
+                            .call(yAxis);
+                        
+  
+                        </script>
+                        
+                        </div>
+                        
+ 
+                     <div class="clear"></div>
+                     <p>&nbsp;</p>
+                     <p>&nbsp;</p>
+                     <p>&nbsp;</p>
+                </div>
+                 <div style="clear:both;"></div>
+               </article><!-- end of styles article -->
+
+          <div class="spacer"></div>
+
+	</section>           
+        
+<% include templates/footer_dash.ejs %>
+
+
+<%} else{ %>
+
+    
+     <% include error_dash.ejs %>
+
+<% } %>
+ 

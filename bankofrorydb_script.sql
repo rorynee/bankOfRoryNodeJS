@@ -35,7 +35,7 @@ CREATE TABLE `account` (
   KEY `fk_account_account_type1_idx` (`account_type_id`),
   CONSTRAINT `fk_account_account_type1` FOREIGN KEY (`account_type_id`) REFERENCES `account_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_acc_trans_users1` FOREIGN KEY (`users_account_no`) REFERENCES `users` (`account_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (63,1,0.00,1),(64,2,0.00,1),(65,3,15.00,1),(66,4,10.10,2),(67,5,90.00,1),(68,6,1000.00,1),(69,7,99.00,1),(70,8,69.00,1),(71,9,345.00,1),(73,11,13.00,1),(74,12,5678.89,1),(75,13,78.00,1),(76,15,20.00,2);
+INSERT INTO `account` VALUES (63,1,0.00,1),(64,2,0.00,1),(65,3,15.00,1),(66,4,10.10,2),(67,5,90.00,1),(68,6,1000.00,1),(69,7,99.00,1),(70,8,69.00,1),(71,9,345.00,1),(73,11,20.00,1),(74,12,5000.00,1),(75,13,78.00,1),(76,15,2500.00,2),(77,16,3000.00,1),(78,17,30.00,1),(79,18,700.00,1),(80,19,700.00,1),(81,20,1010.00,1),(82,21,800.00,1),(83,22,130.00,1),(84,23,250.00,1),(85,24,35.00,1),(86,25,10.00,1),(87,26,5.00,1),(88,27,50.00,1),(89,28,82.00,1),(90,29,70.00,1),(91,30,175.00,1);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -83,7 +83,7 @@ CREATE TABLE `transactions` (
   PRIMARY KEY (`transaction_id`),
   UNIQUE KEY `tranactions_UNIQUE` (`transaction_id`),
   KEY `fk_transactions_users_account1_nox` (`users_account_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +92,7 @@ CREATE TABLE `transactions` (
 
 LOCK TABLES `transactions` WRITE;
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `transactions` VALUES (88,'2014-12-02 21:49:03','Open Account',0.00,15),(89,'2014-12-02 21:49:25','Deposit Money',70.00,15),(90,'2014-12-02 21:51:19','Open Account',0.00,16),(91,'2014-12-02 21:51:36','Deposit Money',33.00,16),(92,'2014-12-02 21:51:44','Withdraw Money',3.99,16),(95,'2014-12-02 22:53:48','Open Account',0.00,17),(96,'2014-12-02 22:54:07','Deposit Money',400.00,17),(111,'2015-09-04 20:54:07','Open Account',0.00,36),(130,'2015-09-04 21:11:09','Open Account',0.00,55),(131,'2015-09-04 21:11:09','Open Account',0.00,56),(132,'2015-09-04 21:11:09','Open Account',0.00,57),(133,'2015-09-04 21:11:09','Open Account',0.00,58),(134,'2015-09-04 21:11:09','Open Account',0.00,59),(135,'2015-09-04 21:11:09','Open Account',0.00,60),(136,'2015-09-04 21:11:09','Open Account',0.00,61),(137,'2015-09-04 21:11:09','Open Account',0.00,62),(138,'2015-09-04 21:15:41','Open Account',0.00,63),(139,'2015-09-04 21:15:41','Open Account',0.00,64),(140,'2015-09-04 21:15:41','Open Account',0.00,65),(141,'2015-09-04 21:15:41','Open Account',0.00,66),(142,'2015-09-04 21:15:41','Open Account',0.00,67),(150,'2015-09-04 21:15:41','Open Account',0.00,75),(151,'2015-09-05 13:06:14','Deposit Money',20.00,3),(152,'2015-09-05 13:06:25','Withdraw Money',5.00,3),(153,'2015-09-05 15:17:11','Changed Balance',10.10,4),(154,'2015-09-05 18:48:51','Open Account',0.00,76),(155,'2015-09-05 18:49:37','Changed Balance',20.00,15),(156,'2015-09-05 19:08:43','Changed Balance',90.00,5),(157,'2015-09-05 19:09:14','Changed Balance',1000.00,6),(158,'2015-09-05 19:09:28','Changed Balance',99.00,7),(159,'2015-09-05 19:09:41','Changed Balance',69.00,8),(160,'2015-09-05 19:09:54','Changed Balance',345.00,9),(161,'2015-09-05 19:10:10','Changed Balance',13.00,11),(162,'2015-09-05 19:10:29','Changed Balance',5678.89,12),(163,'2015-09-05 19:10:40','Changed Balance',78.00,13);
+INSERT INTO `transactions` VALUES (88,'2014-12-02 21:49:03','Open Account',0.00,15),(89,'2014-12-02 21:49:25','Deposit Money',70.00,15),(90,'2014-12-02 21:51:19','Open Account',0.00,16),(91,'2014-12-02 21:51:36','Deposit Money',33.00,16),(92,'2014-12-02 21:51:44','Withdraw Money',3.99,16),(95,'2014-12-02 22:53:48','Open Account',0.00,17),(96,'2014-12-02 22:54:07','Deposit Money',400.00,17),(111,'2015-09-04 20:54:07','Open Account',0.00,36),(130,'2015-09-04 21:11:09','Open Account',0.00,55),(131,'2015-09-04 21:11:09','Open Account',0.00,56),(132,'2015-09-04 21:11:09','Open Account',0.00,57),(133,'2015-09-04 21:11:09','Open Account',0.00,58),(134,'2015-09-04 21:11:09','Open Account',0.00,59),(135,'2015-09-04 21:11:09','Open Account',0.00,60),(136,'2015-09-04 21:11:09','Open Account',0.00,61),(137,'2015-09-04 21:11:09','Open Account',0.00,62),(138,'2015-09-04 21:15:41','Open Account',0.00,63),(139,'2015-09-04 21:15:41','Open Account',0.00,64),(140,'2015-09-04 21:15:41','Open Account',0.00,65),(141,'2015-09-04 21:15:41','Open Account',0.00,66),(142,'2015-09-04 21:15:41','Open Account',0.00,67),(150,'2015-09-04 21:15:41','Open Account',0.00,75),(151,'2015-09-05 13:06:14','Deposit Money',20.00,3),(152,'2015-09-05 13:06:25','Withdraw Money',5.00,3),(153,'2015-09-05 15:17:11','Changed Balance',10.10,4),(154,'2015-09-05 18:48:51','Open Account',0.00,76),(155,'2015-09-05 18:49:37','Changed Balance',20.00,15),(156,'2015-09-05 19:08:43','Changed Balance',90.00,5),(157,'2015-09-05 19:09:14','Changed Balance',1000.00,6),(158,'2015-09-05 19:09:28','Changed Balance',99.00,7),(159,'2015-09-05 19:09:41','Changed Balance',69.00,8),(160,'2015-09-05 19:09:54','Changed Balance',345.00,9),(161,'2015-09-05 19:10:10','Changed Balance',13.00,11),(162,'2015-09-05 19:10:29','Changed Balance',5678.89,12),(163,'2015-09-05 19:10:40','Changed Balance',78.00,13),(164,'2015-09-08 14:52:04','Changed Balance',2500.00,15),(165,'2015-09-09 14:49:58','Changed Balance',20.00,11),(166,'2015-09-09 14:53:07','Open Account',0.00,77),(167,'2015-09-09 15:07:46','Open Account',0.00,78),(168,'2015-09-09 15:07:46','Open Account',0.00,79),(169,'2015-09-09 15:07:46','Open Account',0.00,80),(170,'2015-09-09 15:07:46','Open Account',0.00,81),(171,'2015-09-09 15:07:46','Open Account',0.00,82),(172,'2015-09-09 15:07:46','Open Account',0.00,83),(173,'2015-09-09 15:07:46','Open Account',0.00,84),(174,'2015-09-09 15:07:46','Open Account',0.00,85),(175,'2015-09-09 15:07:46','Open Account',0.00,86),(176,'2015-09-09 15:07:46','Open Account',0.00,87),(177,'2015-09-09 15:09:14','Changed Balance',3000.00,16),(178,'2015-09-09 15:09:28','Changed Balance',69.69,17),(179,'2015-09-09 15:09:40','Changed Balance',30.00,17),(180,'2015-09-09 15:09:59','Changed Balance',700.00,18),(181,'2015-09-09 15:10:13','Changed Balance',700.00,19),(182,'2015-09-09 15:10:29','Changed Balance',1010.00,20),(183,'2015-09-09 15:10:41','Changed Balance',800.00,21),(184,'2015-09-09 15:10:53','Changed Balance',130.00,22),(185,'2015-09-09 15:11:18','Changed Balance',5000.00,12),(186,'2015-09-09 15:11:31','Changed Balance',250.00,23),(187,'2015-09-09 15:11:44','Changed Balance',35.00,24),(188,'2015-09-09 15:11:56','Changed Balance',10.00,25),(189,'2015-09-09 15:12:13','Changed Balance',5.00,26),(190,'2015-09-09 15:20:43','Open Account',0.00,88),(191,'2015-09-09 15:20:43','Open Account',0.00,89),(192,'2015-09-09 15:20:43','Open Account',0.00,90),(193,'2015-09-09 15:20:43','Open Account',0.00,91),(194,'2015-09-09 15:21:55','Changed Balance',50.00,27),(195,'2015-09-09 15:22:07','Changed Balance',82.00,28),(196,'2015-09-09 15:22:18','Changed Balance',70.00,29),(197,'2015-09-09 15:22:30','Changed Balance',175.00,30);
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,7 +145,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_users_user_roles1_idx` (`user_roles_role_id`),
   CONSTRAINT `fk_users_user_roles1` FOREIGN KEY (`user_roles_role_id`) REFERENCES `user_roles` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +154,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Admin','MGMT','admin@bankofrory.com',37,'Glebe St','Birr','Ireland','c93ccd78b2076528346216b3b2f701e6',1),(2,'Team','Support','support@bankofrory.com',50,'Glebe St','Birr','Ireland','6df134d687f503fd656074dd969a677a',2),(3,'Liam','Brady','liam@example.com',30,'Main St','Athlone','Ireland','fcea920f7412b5da7be0cf42b8c93759',3),(4,'Billy','Batgate','billy@ait.ie',33,'Main St','Athlone','Ireland','fcea920f7412b5da7be0cf42b8c93759',3),(5,'Mary','Willis','mary@example.com',54,'1050 Broadway','New York','USA','fcea920f7412b5da7be0cf42b8c93759',3),(6,'Jack','Ryan','jack@example.com',34,'1984 Broadway','New York','USA','fcea920f7412b5da7be0cf42b8c93759',3),(7,'David','Adams','david@gmail.com',34,'Glebe St','Birr','Ireland','fcea920f7412b5da7be0cf42b8c93759',3),(8,'Ann','Lawson','Ann@avon.com',54,'Main St','London','England','fcea920f7412b5da7be0cf42b8c93759',3),(9,'Eddie','Enright','eddie@birr.net',38,'1 Emmet St','Birr','Ireland','fcea920f7412b5da7be0cf42b8c93759',3),(11,'Britney S.','Pierce','britney@et.com',21,'2 Central Park West','New York','USA','fcea920f7412b5da7be0cf42b8c93759',3),(12,'James','Morrison','James@example.com',33,'Love Street','Athlone','Ireland','fcea920f7412b5da7be0cf42b8c93759',3),(13,'Jan','Var Plank','jan@example.com',56,'21 Dutch Rd','Amsterdam','Holland','fcea920f7412b5da7be0cf42b8c93759',3),(15,'Biddy','Biddy','biddy@example.com',24,'Wall St','New York','USA','fcea920f7412b5da7be0cf42b8c93759',3);
+INSERT INTO `users` VALUES (1,'Admin','MGMT','admin@bankofrory.com',37,'Glebe St','Birr','Ireland','c93ccd78b2076528346216b3b2f701e6',1),(2,'Team','Support','support@bankofrory.com',50,'Glebe St','Birr','Ireland','6df134d687f503fd656074dd969a677a',2),(3,'Liam','Brady','liam@example.com',30,'Main St','Athlone','Ireland','fcea920f7412b5da7be0cf42b8c93759',3),(4,'Billy','Batgate','billy@ait.ie',33,'Main St','Athlone','Ireland','fcea920f7412b5da7be0cf42b8c93759',3),(5,'Mary','Willis','mary@example.com',54,'1050 Broadway','New York','USA','fcea920f7412b5da7be0cf42b8c93759',3),(6,'Jack','Ryan','jack@example.com',34,'1984 Broadway','New York','USA','fcea920f7412b5da7be0cf42b8c93759',3),(7,'David','Adams','david@gmail.com',34,'Glebe St','Birr','Ireland','fcea920f7412b5da7be0cf42b8c93759',3),(8,'Ann','Lawson','Ann@avon.com',54,'Main St','London','England','fcea920f7412b5da7be0cf42b8c93759',3),(9,'Eddie','Enright','eddie@birr.net',38,'1 Emmet St','Birr','Ireland','fcea920f7412b5da7be0cf42b8c93759',3),(11,'Britney S.','Pierce','britney@et.com',21,'2 Central Park West','New York','USA','fcea920f7412b5da7be0cf42b8c93759',3),(12,'James','Morrison','James@example.com',33,'Love Street','Athlone','Ireland','fcea920f7412b5da7be0cf42b8c93759',3),(13,'Jan','Var Plank','jan@example.com',56,'21 Dutch Rd','Amsterdam','Holland','fcea920f7412b5da7be0cf42b8c93759',3),(15,'Biddy','Biddy','biddy@example.com',24,'Wall St','New York','USA','fcea920f7412b5da7be0cf42b8c93759',3),(16,'Gus','Van Sans','gus@example.com',69,'Holland St','Amsterdam','Holland','fcea920f7412b5da7be0cf42b8c93759',3),(17,'George','Bush','george@example.com',19,'Wall St','New York','USA','fcea920f7412b5da7be0cf42b8c93759',3),(18,'Jane','Doe','jane@example.com',29,'Sun St','Tokyo','Japan','fcea920f7412b5da7be0cf42b8c93759',3),(19,'John','Doe','john@example.com',39,'Lecker Plaza','Rotterdame','Holland','fcea920f7412b5da7be0cf42b8c93759',3),(20,'Viera','Linn','viera@example.com',49,'Windmill Lane','Maastricht','Holland','fcea920f7412b5da7be0cf42b8c93759',3),(21,'Dusty','Springfield','dusty@example.com',31,'Rue une','Nantes','France','fcea920f7412b5da7be0cf42b8c93759',3),(22,'Sinead','Connors','sinead@example.com',22,'Manc ave','Manchester','England','fcea920f7412b5da7be0cf42b8c93759',3),(23,'Laura','Moran','laura@example.com',26,'Stranger St','Liverpool','England','fcea920f7412b5da7be0cf42b8c93759',3),(24,'Matt','Muggs','matt@example.com',27,'Royal St','London','England','fcea920f7412b5da7be0cf42b8c93759',3),(25,'Francy','Ward','francy@example.com',25,'Limerick St','Limerick','Ireland','fcea920f7412b5da7be0cf42b8c93759',3),(26,'Jean','Reid','jean@example.com',71,'Rue de Paris','Nice','France','fcea920f7412b5da7be0cf42b8c93759',3),(27,'Winnie','Gold','winnie@example.com',21,'Wall St','New York','USA','fcea920f7412b5da7be0cf42b8c93759',3),(28,'Elise','Gillen','elise@example.com',31,'Holyland St','Dublin','Ireland','fcea920f7412b5da7be0cf42b8c93759',3),(29,'Betty','Reid','betty@example.com',41,'Lecker Plaza','Rotterdame','Holland','fcea920f7412b5da7be0cf42b8c93759',3),(30,'Patrick','Cole','patrick@example.com',51,'Windmill Lane','Maastricht','Holland','fcea920f7412b5da7be0cf42b8c93759',3);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -499,9 +499,9 @@ DELIMITER ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `GET_Top_BALANCES`()
 BEGIN
-SELECT a.id,u.first_name,u.last_name,u.country,a.balance, at.type, Count(t.account_id) as no_of_trans FROM users as u join account as a join
+SELECT a.users_account_no,u.first_name,u.last_name,u.country,a.balance, at.type, Count(t.users_account_no) as no_of_trans FROM users as u join account as a join
 account_type as at join transactions as t WHERE u.account_no = a.users_account_no AND 
-a.account_type_id = at.id AND a.id = t.account_id AND u.user_roles_role_id > 2 group by a.id order by balance desc;
+a.account_type_id = at.id AND a.users_account_no = t.users_account_no AND u.user_roles_role_id > 2 group by a.id order by balance desc LIMIT 25;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -521,9 +521,9 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `GET_Top_REGIONS`()
 BEGIN
 SELECT Count(DISTINCT u.account_no) as total_cust,u.country,
-Sum(DISTINCT a.balance) as total_bal, Count(t.account_id) as no_of_trans FROM users as u join account as a join
+Sum(DISTINCT a.balance) as total_bal, Count(t.users_account_no) as no_of_trans FROM users as u join account as a join
 account_type as at join transactions as t WHERE u.account_no = a.users_account_no AND 
-a.account_type_id = at.id AND a.id = t.account_id AND u.user_roles_role_id > 2 group by u.country order by total_bal desc;
+a.account_type_id = at.id AND a.users_account_no = t.users_account_no AND u.user_roles_role_id > 2 group by u.country order by total_bal desc;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -702,4 +702,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-05 21:01:23
+-- Dump completed on 2015-09-13 20:57:12
